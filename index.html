@@ -5,28 +5,6 @@
   ============================================================
   LAWRENCE LEI-RAMIREZ — PORTFOLIO  (REV 2.0)
   ============================================================
-  HOW TO ADD YOUR IMAGES
-  1) Put this file in a folder. Next to it, create a folder
-     named exactly:  images
-  2) Drop your photos in with these exact filenames:
-
-       images/01-drone-main.jpg     -> Project 01 hero (yellow frame)
-       images/01-drone-poster.jpg   -> Research poster
-       images/01-drone-rig.jpg      -> Load-cell test rig
-       images/02-ferros-main.jpg    -> Project Ferros (optional for now)
-       images/about-portrait.jpg    -> Photo of you at the bench
-       images/signature.png         -> Your signature (transparent PNG)
-
-  3) That's it. The hatched "missing image" boxes are automatic
-     fallbacks — the moment a file with the right name exists,
-     the real photo appears. No code edits needed.
-     (.png works too — just match the filename in the src below.)
-
-  EASTER EGGS
-  - Press  G  to toggle the drafting grid
-  - A micro-drone follows your cursor (toggle in the footer)
-  - Click "REV 2.0" in the footer title block
-  ============================================================
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -538,8 +516,11 @@ html.is-down #cursor .dot{transform:scale(.8)}
   position:fixed;left:0;top:0;z-index:80;pointer-events:none;
   width:64px;opacity:0;transition:opacity .4s;
   will-change:transform;
+  /* lock the drone's palette — dark mode must not flip its outlines */
+  --ink:#161513;--ink-2:#6E6B63;--paper:#F2F1ED;--accent:#F2B705;
 }
 html.drone-live #drone{opacity:1}
+html[data-theme="dark"] #drone svg{filter:drop-shadow(0 0 4px rgba(242,241,237,.32))}
 #drone .frame{transition:transform .12s linear}
 #drone .roll-wrap{transform-origin:32px 22px}
 #drone.roll .roll-wrap{animation:roll .7s var(--ease)}
@@ -551,6 +532,42 @@ html.drone-live #drone{opacity:1}
   100%{transform:scaleX(1);opacity:.85}
 }
 #drone .led{animation:blink 1.2s steps(2,start) infinite}
+
+/* ============================================================
+   FLASHLIGHT — dark mode + desktop only
+   The circle inverts whatever is behind it (dark theme flips
+   to light inside the beam); the giant shadow blacks out the
+   rest of the page.
+   ============================================================ */
+#torch{
+  position:fixed;left:0;top:0;width:340px;height:340px;border-radius:50%;
+  z-index:74;pointer-events:none;opacity:0;transition:opacity .45s ease;
+  -webkit-backdrop-filter:invert(1) hue-rotate(180deg);
+  backdrop-filter:invert(1) hue-rotate(180deg);
+  box-shadow:0 0 0 200vmax rgba(6,6,5,.86), inset 0 0 70px rgba(255,222,110,.10);
+  border:1px solid rgba(255,210,63,.16);
+  will-change:transform;
+}
+html.torch-on #torch{opacity:1}
+@supports not ((backdrop-filter:invert(1)) or (-webkit-backdrop-filter:invert(1))){
+  #torch{background:radial-gradient(circle,rgba(255,236,170,.16),rgba(255,236,170,.04) 60%,transparent 75%)}
+}
+#beam{
+  position:fixed;left:0;top:0;height:340px;width:0;z-index:76;pointer-events:none;
+  transform-origin:0 170px;opacity:0;transition:opacity .45s ease;
+  clip-path:polygon(0 47%,0 53%,100% 100%,100% 0);
+  background:linear-gradient(90deg,rgba(255,236,170,.32),rgba(255,236,170,.10) 55%,rgba(255,236,170,0) 92%);
+}
+html.torch-on.drone-live #beam{opacity:1}
+/* crosshair flips to ink inside the lit area */
+html.torch-on #cursor .cx,html.torch-on #cursor .cy{background:#161513}
+html.torch-on #cursor .br{border-color:#161513}
+html.torch-on #cursor .coords{color:#3c3a36}
+html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
+
+/* parked drone — touch devices */
+#drone.parked{pointer-events:auto;touch-action:none}
+#drone.parked .prop{animation:none}
 
 /* ============================================================
    MOTION PREFERENCES
@@ -738,6 +755,7 @@ html.drone-live #drone{opacity:1}
       <div class="sec-head">
         <span class="mono">02 / About</span>
         <span class="rule"></span>
+        <span class="sec-count mono">EST. 2010</span>
       </div>
       <div class="about-grid">
         <h2 class="about-statement" data-rv>Creating robotics and computer-vision systems that bridge <em>software, hardware, and automation.</em></h2>
@@ -827,6 +845,9 @@ html.drone-live #drone{opacity:1}
 
 <!-- ================= OVERLAYS ================= -->
 <div class="grid-ol" aria-hidden="true"><span class="tag">Grid 8 / 80 — [G] to hide</span></div>
+
+<div id="torch" aria-hidden="true"></div>
+<div id="beam" aria-hidden="true"></div>
 
 <div id="cursor" aria-hidden="true">
   <span class="cx"></span><span class="cy"></span><span class="dot"></span>
@@ -933,12 +954,16 @@ html.drone-live #drone{opacity:1}
   var cursor = document.getElementById('cursor');
   var coords = cursor.querySelector('.coords');
   var ctag = cursor.querySelector('.tag');
+  var torch = document.getElementById('torch');
+  var beam = document.getElementById('beam');
   var mx = innerWidth/2, my = innerHeight/2, moved = false;
+  torch.style.transform = 'translate3d('+(mx-170)+'px,'+(my-170)+'px,0)';
 
   if(fine){
     window.addEventListener('pointermove', function(e){
       mx = e.clientX; my = e.clientY;
       cursor.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+      torch.style.transform = 'translate3d('+(mx-170)+'px,'+(my-170)+'px,0)';
       coords.textContent = 'X ' + String(Math.round(mx)).padStart(4,'0') +
                            ' · Y ' + String(Math.round(my)).padStart(4,'0');
       if(!moved){ moved = true; docEl.classList.add('cursor-live'); if(!reduce) docEl.classList.add('drone-live'); }
@@ -964,39 +989,131 @@ html.drone-live #drone{opacity:1}
   var drone = document.getElementById('drone');
   var frame = drone.querySelector('.frame');
   var droneOn = true;
+  var coarse = !fine;
   var dx = mx, dy = my, pvx = 0;
+  var tX = mx, tY = my;                       /* flight target */
+  var mode = coarse ? 'parked' : 'follow';    /* follow | parked | tour | chase | return */
+  var wps = [], wpi = 0, idleTimer = null;
   var t0 = performance.now();
 
+  function perchPos(){ return { x: 46, y: innerHeight - 64 }; }
+  function park(){
+    mode = 'parked';
+    var p = perchPos(); dx = tX = p.x; dy = tY = p.y;
+    drone.classList.add('parked');
+    drone.style.transform = 'translate3d(' + (dx - 32) + 'px,' + (dy - 22) + 'px,0)';
+    frame.style.transform = 'rotate(0deg)';
+  }
+  function doRoll(){
+    drone.classList.remove('roll');
+    void drone.offsetWidth; /* restart animation */
+    drone.classList.add('roll');
+  }
+  function armIdle(){
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function(){
+      if(mode === 'tour' || mode === 'chase'){
+        mode = 'return';
+        var p = perchPos(); tX = p.x; tY = p.y;
+      }
+    }, 6000);
+  }
+
+  /* touch devices: the drone perches in the corner — tap to launch,
+     tap anywhere to steer, it flies home and lands on its own */
+  if(coarse && !reduce){
+    docEl.classList.add('drone-live');
+    park();
+    drone.addEventListener('pointerdown', function(e){
+      if(mode !== 'parked') return;
+      e.preventDefault();
+      mode = 'tour'; wpi = 0;
+      var w = innerWidth, h = innerHeight;
+      wps = [[w*.78,h*.28],[w*.5,h*.16],[w*.2,h*.34],[w*.32,h*.62],[w*.72,h*.56]];
+      tX = wps[0][0]; tY = wps[0][1];
+      drone.classList.remove('parked');
+      armIdle();
+    });
+    document.addEventListener('pointerdown', function(e){
+      if(mode !== 'tour' && mode !== 'chase') return;
+      if(e.target.closest('#drone')) return;
+      mode = 'chase';
+      tX = Math.min(innerWidth - 40, Math.max(40, e.clientX));
+      tY = Math.max(70, e.clientY - 70);
+      armIdle();
+    }, {passive:true});
+    window.addEventListener('resize', function(){ if(mode === 'parked') park(); });
+  }
+
   function fly(now){
-    var bob = Math.sin((now - t0)/420) * 3.5;
-    var tx = mx + 30, ty = my - 52;
-    var nx = dx + (tx - dx) * 0.085;
-    var ny = dy + (ty - dy) * 0.085;
+    if(fine){ tX = mx + 30; tY = my - 52; }
+    var flying = mode !== 'parked';
+    var bob = flying ? Math.sin((now - t0)/420) * 3.5 : 0;
+    var k = (mode === 'tour' || mode === 'return') ? 0.05 : 0.085;
+    var nx = dx + (tX - dx) * k;
+    var ny = dy + (tY - dy) * k;
     var vx = nx - dx;
     pvx = pvx + (vx - pvx) * .2;
     dx = nx; dy = ny;
-    var tilt = Math.max(-16, Math.min(16, pvx * 1.6));
+    var tilt = flying ? Math.max(-16, Math.min(16, pvx * 1.6)) : 0;
     drone.style.transform = 'translate3d(' + (dx - 32) + 'px,' + (dy - 22 + bob) + 'px,0)';
     frame.style.transform = 'rotate(' + tilt + 'deg)';
+
+    /* mobile flight plan */
+    if(coarse && flying){
+      var ddx = tX - dx, ddy = tY - dy, d2 = ddx*ddx + ddy*ddy;
+      if(mode === 'tour' && d2 < 2600){
+        wpi++;
+        if(wpi === 2) doRoll();
+        if(wpi >= wps.length){
+          mode = 'return';
+          var p = perchPos(); tX = p.x; tY = p.y;
+        }else{
+          tX = wps[wpi][0]; tY = wps[wpi][1];
+        }
+      }else if(mode === 'return' && d2 < 130){
+        park();
+      }
+    }
+
+    /* flashlight cone — drawn from the drone's lamp to the beam */
+    if(docEl.classList.contains('torch-on')){
+      var lx = dx + 10, ly = dy + 2 + bob;
+      var ang = Math.atan2(my - ly, mx - lx);
+      var dist = Math.hypot(mx - lx, my - ly);
+      beam.style.width = Math.max(0, dist) + 'px';
+      beam.style.transform = 'translate3d(' + lx + 'px,' + (ly - 170) + 'px,0) rotate(' + ang + 'rad)';
+    }
     requestAnimationFrame(fly);
   }
-  if(fine && !reduce) requestAnimationFrame(fly);
+  if(!reduce) requestAnimationFrame(fly);
 
   var droneBtn = document.getElementById('droneBtn');
   droneBtn.addEventListener('click', function(){
     droneOn = !droneOn;
     droneBtn.setAttribute('aria-pressed', droneOn);
     droneBtn.textContent = droneOn ? 'Drone: on' : 'Drone: off';
-    if(droneOn && fine && !reduce){ docEl.classList.add('drone-live'); }
-    else{ docEl.classList.remove('drone-live'); }
+    if(droneOn && !reduce){
+      docEl.classList.add('drone-live');
+      if(coarse) park();
+    }else{
+      docEl.classList.remove('drone-live');
+    }
+    setTorch();
   });
+
+  /* ---------- flashlight mode : dark theme + desktop only ---------- */
+  function setTorch(){
+    var dark = docEl.getAttribute('data-theme') === 'dark';
+    docEl.classList.toggle('torch-on', dark && fine && !reduce && droneOn);
+  }
+  document.getElementById('themeBtn').addEventListener('click', setTorch);
+  setTorch();
 
   /* ---------- REV 2.0 — barrel roll ---------- */
   document.getElementById('revBtn').addEventListener('click', function(){
     if(!docEl.classList.contains('drone-live')) return;
-    drone.classList.remove('roll');
-    void drone.offsetWidth; /* restart animation */
-    drone.classList.add('roll');
+    doRoll();
   });
 
 })();
