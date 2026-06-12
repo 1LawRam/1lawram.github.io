@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<!--
+  ============================================================
+  LAWRENCE LEI-RAMIREZ — PORTFOLIO  (REV 2.0)
+  ============================================================
+  HOW TO ADD YOUR IMAGES
+  1) Put this file in a folder. Next to it, create a folder
+     named exactly:  images
+  2) Drop your photos in with these exact filenames:
+
+       images/01-drone-main.jpg     -> Project 01 hero (yellow frame)
+       images/01-drone-poster.jpg   -> Research poster
+       images/01-drone-rig.jpg      -> Load-cell test rig
+       images/02-ferros-main.jpg    -> Project Ferros (optional for now)
+       images/about-portrait.jpg    -> Photo of you at the bench
+       images/signature.png         -> Your signature (transparent PNG)
+
+  3) That's it. The hatched "missing image" boxes are automatic
+     fallbacks — the moment a file with the right name exists,
+     the real photo appears. No code edits needed.
+     (.png works too — just match the filename in the src below.)
+
+  EASTER EGGS
+  - Press  G  to toggle the drafting grid
+  - A micro-drone follows your cursor (toggle in the footer)
+  - Click "REV 2.0" in the footer title block
+  ============================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lawrence Lei-Ramirez — Engineer</title>
+<meta name="description" content="Lawrence Lei-Ramirez — a 15-year-old engineer building robotics, embedded systems, and computer-vision projects. Built, not bought.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F2B705'/%3E%3Cpath d='M16 6v20M6 16h20' stroke='%23161513' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%23161513'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --paper:#F2F1ED;
+  --paper-2:#EAE9E3;
+  --ink:#161513;
+  --ink-2:#6E6B63;
+  --line:#D7D4CB;
+  --line-2:#C6C3B9;
+  --accent:#F2B705;        /* caution yellow — same as the printed frame */
+  --accent-ink:#161513;
+  --grid-minor:rgba(22,21,19,.055);
+  --grid-major:rgba(22,21,19,.16);
+  --serif:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans:"Archivo", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+  --nav-h:64px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+html[data-theme="dark"]{
+  --paper:#121110;
+  --paper-2:#181715;
+  --ink:#ECE9E1;
+  --ink-2:#9A968B;
+  --line:#2C2B27;
+  --line-2:#3A3933;
+  --accent:#FFD23F;
+  --accent-ink:#161513;
+  --grid-minor:rgba(236,233,225,.06);
+  --grid-major:rgba(236,233,225,.17);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  transition:background .35s ease,color .35s ease;
+  overflow-x:hidden;
+}
+html.js body{cursor:none}
+html.js a,html.js button{cursor:none}
+@media (pointer:coarse){
+  html.js body,html.js a,html.js button{cursor:auto}
+}
+::selection{background:var(--accent);color:var(--accent-ink)}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+@media (max-width:640px){.wrap{width:calc(100% - 40px)}}
+
+/* mono utility */
+.mono{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+
+/* underlined text link — flat, no gradients */
+.tlink{
+  text-decoration:none;
+  background-image:linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;
+  background-size:100% 1px;
+  background-position:0 100%;
+  transition:background-size .35s var(--ease);
+  padding-bottom:2px;
+}
+.tlink:hover{
+  background-image:linear-gradient(var(--accent),var(--accent));
+  background-size:100% 3px;
+}
+
+/* reveal-on-scroll */
+[data-rv]{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+[data-rv].in{opacity:1;transform:none}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;inset:0 0 auto 0;height:var(--nav-h);z-index:50;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{
+  height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.brand{
+  font-family:var(--serif);font-size:21px;letter-spacing:.01em;text-decoration:none;white-space:nowrap;
+}
+.nav-right{display:flex;align-items:center;gap:26px}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  text-decoration:none;position:relative;padding:6px 0;color:var(--ink-2);transition:color .25s;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--accent);transition:width .3s var(--ease);
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.clock{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-2);
+  border:1px solid var(--line);padding:5px 10px;white-space:nowrap;
+}
+/* DIP-switch theme toggle */
+.dip{
+  width:46px;height:24px;border:1px solid var(--ink);position:relative;flex:none;
+  display:flex;align-items:center;padding:3px;transition:border-color .3s;
+}
+.dip .knob{
+  width:18px;height:16px;background:var(--ink);transition:transform .3s var(--ease),background .3s;
+}
+html[data-theme="dark"] .dip .knob{transform:translateX(20px);background:var(--accent)}
+.dip .pip{position:absolute;top:50%;translate:0 -50%;width:3px;height:3px;background:var(--line-2)}
+.dip .pip.l{left:8px}.dip .pip.r{right:8px}
+@media (max-width:860px){
+  .nav-links{display:none}
+  .clock{display:none}
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:calc(var(--nav-h) + 56px) 0 64px;position:relative;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:14px;color:var(--ink-2);margin-bottom:38px;
+}
+.hero-eyebrow .rule{flex:0 0 56px;height:1px;background:var(--ink-2)}
+.hero h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(64px,13.5vw,176px);
+  line-height:.94;letter-spacing:-.015em;
+  margin-bottom:48px;
+}
+.hl{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.hl > span{display:inline-block;transform:translateY(115%);transition:transform 1s var(--ease)}
+.hl:nth-child(2) > span{transition-delay:.12s}
+html.loaded .hl > span{transform:translateY(0)}
+
+.hero-sub{
+  max-width:520px;font-size:18px;color:var(--ink-2);margin-bottom:46px;
+  opacity:0;transform:translateY(14px);transition:opacity .8s var(--ease) .55s,transform .8s var(--ease) .55s;
+}
+html.loaded .hero-sub{opacity:1;transform:none}
+.hero-sub strong{color:var(--ink);font-weight:500}
+
+.hero-meta{
+  display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+  opacity:0;transition:opacity .8s ease .85s;
+}
+html.loaded .hero-meta{opacity:1}
+.status{display:flex;align-items:center;gap:10px;color:var(--ink-2)}
+.pulse{
+  width:8px;height:8px;background:var(--accent);position:relative;flex:none;
+}
+.pulse::after{
+  content:"";position:absolute;inset:-4px;border:1px solid var(--accent);
+  animation:pulse 2.2s ease-out infinite;
+}
+@keyframes pulse{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(1.5)}}
+.scroll-cue{display:flex;align-items:center;gap:10px;color:var(--ink-2);text-decoration:none}
+.scroll-cue .ln{width:1px;height:30px;background:var(--ink-2);overflow:hidden;position:relative}
+.scroll-cue .ln::after{
+  content:"";position:absolute;left:0;top:-100%;width:100%;height:100%;background:var(--accent);
+  animation:drip 2s var(--ease) infinite;
+}
+@keyframes drip{0%{top:-100%}55%{top:0}100%{top:100%}}
+
+.hero-coords{
+  position:absolute;right:-4px;top:50%;transform:rotate(90deg) translateX(-50%);
+  transform-origin:right center;color:var(--ink-2);white-space:nowrap;
+}
+@media (max-width:1320px){.hero-coords{display:none}}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.mq{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;padding:15px 0;background:var(--paper-2);
+}
+.mq-track{display:flex;width:max-content;animation:mq 30s linear infinite}
+.mq:hover .mq-track{animation-play-state:paused}
+.mq-row{display:flex;flex:none;white-space:nowrap;color:var(--ink-2)}
+.mq-row span{padding:0 14px}
+.mq-row .sep{color:var(--accent);padding:0}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+section{scroll-margin-top:calc(var(--nav-h) + 18px)}
+.sec-head{
+  display:flex;align-items:baseline;gap:18px;
+  padding:96px 0 40px;color:var(--ink-2);
+}
+.sec-head .rule{flex:1;height:1px;background:var(--line);align-self:center}
+.sec-count{color:var(--ink-2)}
+
+/* ============================================================
+   WORK
+   ============================================================ */
+.proj{border-top:1px solid var(--line)}
+.proj:last-of-type{border-bottom:1px solid var(--line)}
+.proj-toggle{
+  width:100%;text-align:left;display:grid;
+  grid-template-columns:90px 1fr auto;gap:28px;align-items:baseline;
+  padding:42px 0;transition:padding-left .35s var(--ease);
+}
+.proj-toggle:hover{padding-left:14px}
+.proj-idx{
+  font-family:var(--serif);font-size:30px;color:var(--ink-2);transition:color .3s;
+}
+.proj-toggle:hover .proj-idx{color:var(--accent)}
+.proj-title{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(26px,3.6vw,44px);line-height:1.12;letter-spacing:-.01em;
+  max-width:21ch;
+}
+.proj-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px;text-align:right}
+.proj-meta{color:var(--ink-2)}
+.proj-state{display:flex;align-items:center;gap:8px}
+.proj-state .led{width:7px;height:7px;flex:none}
+.led.ok{background:var(--ink)}
+.led.dev{background:var(--accent);animation:blink 1.4s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+.proj-arrow{
+  font-family:var(--mono);font-size:13px;color:var(--ink-2);
+  transition:transform .4s var(--ease),color .3s;
+}
+.proj.open .proj-arrow{transform:rotate(45deg);color:var(--ink)}
+
+.proj-panel{
+  display:grid;grid-template-rows:0fr;transition:grid-template-rows .65s var(--ease);
+}
+.proj.open .proj-panel{grid-template-rows:1fr}
+.proj-panel-in{overflow:hidden}
+.proj-body{
+  padding:6px 0 64px;display:grid;grid-template-columns:1fr 1fr;gap:48px 56px;
+}
+.proj-copy p{color:var(--ink-2);margin-bottom:1.1em;max-width:58ch}
+.proj-copy p:last-child{margin-bottom:0}
+.proj-copy .lede{color:var(--ink);font-size:18px}
+.kw{margin-top:26px;color:var(--ink-2);line-height:2}
+.kw b{color:var(--ink);font-weight:500}
+
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);margin-top:34px;
+}
+.stat{padding:16px 14px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .k{color:var(--ink-2);display:block;margin-bottom:8px}
+.stat .v{font-family:var(--serif);font-size:26px;line-height:1}
+@media (max-width:560px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+
+.proj-media{display:flex;flex-direction:column;gap:22px}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+figure figcaption{margin-top:10px;color:var(--ink-2)}
+
+.dev-note{
+  margin-top:30px;border-left:2px solid var(--accent);padding:4px 0 4px 18px;color:var(--ink-2);
+}
+
+@media (max-width:920px){
+  .proj-body{grid-template-columns:1fr}
+  .proj-toggle{grid-template-columns:56px 1fr;row-gap:14px}
+  .proj-side{grid-column:2;flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;text-align:left}
+}
+
+/* ============================================================
+   IMAGE PLACEHOLDERS (auto-fallback)
+   ============================================================ */
+.ph{position:relative;border:1px solid var(--line);background:var(--paper-2)}
+.ph img{width:100%;height:100%;object-fit:cover;aspect-ratio:inherit}
+.ph.r3x2{aspect-ratio:3/2}
+.ph.r4x3{aspect-ratio:4/3}
+.ph.r1x1{aspect-ratio:1/1}
+.ph.r4x5{aspect-ratio:4/5}
+.ph.missing{
+  background:repeating-linear-gradient(45deg,transparent 0 9px,var(--line) 9px 10px);
+}
+.ph.missing img{display:none}
+.ph.missing::before{
+  content:"ADD IMAGE";
+  position:absolute;top:10px;left:10px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+  background:var(--accent);color:var(--accent-ink);padding:3px 7px;
+}
+.ph.missing::after{
+  content:"images/" attr(data-file);
+  position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  background:var(--paper);border:1px solid var(--line-2);
+  padding:8px 14px;color:var(--ink-2);white-space:nowrap;max-width:92%;
+  overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:72px;padding-bottom:110px;
+}
+.about-statement{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(30px,3.8vw,48px);line-height:1.16;letter-spacing:-.01em;
+  position:sticky;top:calc(var(--nav-h) + 40px);align-self:start;
+}
+.about-statement em{font-style:italic;color:var(--ink-2)}
+.about-col p{color:var(--ink-2);max-width:54ch;margin-bottom:1.2em}
+.caps{list-style:none;margin:44px 0 50px;border-top:1px solid var(--line)}
+.caps li{
+  display:grid;grid-template-columns:44px 200px 1fr;gap:16px;align-items:baseline;
+  padding:15px 0;border-bottom:1px solid var(--line);
+}
+.caps .ci{color:var(--ink-2)}
+.caps .cn{font-weight:500;font-size:15px}
+.caps .cd{color:var(--ink-2);font-size:14px}
+@media (max-width:560px){
+  .caps li{grid-template-columns:40px 1fr}
+  .caps .cd{grid-column:2}
+}
+.about-fig{margin:8px 0 44px}
+.sig{margin-top:14px}
+.sig .sig-frame{border:0;background:none;max-width:300px}
+.sig img{
+  width:100%;object-fit:contain;aspect-ratio:auto;
+  clip-path:inset(0 100% 0 0);transition:clip-path 1.4s var(--ease) .2s;
+}
+html[data-theme="dark"] .sig img{filter:invert(1)}
+.sig.in img{clip-path:inset(0 0 0 0)}
+.sig .sig-frame.ph.missing{aspect-ratio:3/1;max-width:300px}
+.sig figcaption{margin-top:6px;color:var(--ink-2)}
+@media (max-width:920px){
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .about-statement{position:static}
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{border-top:1px solid var(--line);padding-bottom:110px}
+.contact h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(52px,9vw,128px);line-height:1;letter-spacing:-.015em;
+  margin-bottom:48px;
+}
+.mail{
+  display:inline-block;font-family:var(--mono);font-size:clamp(13px,2.2vw,18px);
+  letter-spacing:.04em;margin-bottom:72px;word-break:break-all;
+}
+.soc{list-style:none;border-top:1px solid var(--line)}
+.soc li{border-bottom:1px solid var(--line)}
+.soc a{
+  display:grid;grid-template-columns:52px 1fr auto 24px;gap:18px;align-items:center;
+  padding:20px 6px;text-decoration:none;position:relative;overflow:hidden;
+}
+.soc a::before{
+  content:"";position:absolute;inset:0;background:var(--ink);
+  transform:scaleY(0);transform-origin:bottom;transition:transform .35s var(--ease);
+}
+.soc a:hover::before{transform:scaleY(1)}
+.soc a > *{position:relative;transition:color .3s}
+.soc .si{color:var(--ink-2)}
+.soc .sn{font-family:var(--serif);font-size:clamp(20px,2.6vw,28px)}
+.soc .sh{color:var(--ink-2);font-size:13px}
+.soc .sa{font-family:var(--mono);font-size:14px;color:var(--ink-2);transition:transform .35s var(--ease),color .3s}
+.soc a:hover > *{color:var(--paper)}
+.soc a:hover .sa{transform:translate(3px,-3px);color:var(--accent)}
+@media (max-width:560px){
+  .soc a{grid-template-columns:36px 1fr 24px}
+  .soc .sh{display:none}
+}
+
+/* ============================================================
+   FOOTER — drawing title block
+   ============================================================ */
+.foot{border-top:2px solid var(--ink)}
+.tblock{
+  display:grid;
+  grid-template-columns:2.2fr 1.4fr 1fr .8fr .8fr .8fr;
+  border-left:1px solid var(--line);border-right:1px solid var(--line);
+}
+.tb{padding:14px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tb:last-child{border-right:0}
+.tb .k{display:block;color:var(--ink-2);margin-bottom:6px;font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase}
+.tb .v{font-size:13.5px;font-weight:500;letter-spacing:.02em}
+.tb .v.serif{font-family:var(--serif);font-size:16px;font-weight:400}
+.tb-rev{padding:0;font-weight:500;font-size:13.5px;border-bottom:1px dashed var(--ink-2)}
+.foot-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  padding:18px 0 26px;color:var(--ink-2);
+}
+.foot-bar .grp{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.ctl{
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  border:1px solid var(--line-2);padding:7px 11px;color:var(--ink-2);
+  transition:all .25s;
+}
+.ctl:hover{border-color:var(--ink);color:var(--ink)}
+.ctl[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.totop{text-decoration:none;color:var(--ink-2);font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.totop:hover{color:var(--ink)}
+@media (max-width:920px){
+  .tblock{grid-template-columns:1fr 1fr 1fr}
+}
+@media (max-width:560px){
+  .tblock{grid-template-columns:1fr 1fr}
+}
+
+/* ============================================================
+   OVERLAYS — grid, cursor, drone
+   ============================================================ */
+.grid-ol{
+  position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0;
+  transition:opacity .35s ease;
+  background-image:
+    linear-gradient(var(--grid-minor) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-minor) 1px,transparent 1px),
+    linear-gradient(var(--grid-major) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-major) 1px,transparent 1px);
+  background-size:8px 8px,8px 8px,80px 80px,80px 80px;
+}
+.grid-ol .tag{
+  position:absolute;bottom:14px;left:14px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+  background:var(--accent);color:var(--accent-ink);padding:3px 8px;
+}
+html.grid-on .grid-ol{opacity:1}
+
+/* crosshair cursor */
+#cursor{
+  position:fixed;left:0;top:0;z-index:90;pointer-events:none;
+  width:0;height:0;opacity:0;transition:opacity .3s;
+}
+html.cursor-live #cursor{opacity:1}
+#cursor .cx,#cursor .cy{position:absolute;background:var(--ink);transition:opacity .25s,transform .25s var(--ease)}
+#cursor .cx{width:30px;height:1px;left:-15px;top:0}
+#cursor .cy{width:1px;height:30px;left:0;top:-15px}
+#cursor .dot{
+  position:absolute;width:5px;height:5px;left:-2.5px;top:-2.5px;
+  background:var(--accent);transition:transform .25s var(--ease);
+}
+#cursor .br{
+  position:absolute;width:9px;height:9px;border:1px solid var(--ink);
+  opacity:0;transition:all .3s var(--ease);
+}
+#cursor .b1{left:-17px;top:-17px;border-right:0;border-bottom:0}
+#cursor .b2{right:-17px;top:-17px;border-left:0;border-bottom:0;left:auto}
+#cursor .b3{left:-17px;bottom:-17px;border-right:0;border-top:0;top:auto}
+#cursor .b4{right:-17px;bottom:-17px;border-left:0;border-top:0;left:auto;top:auto}
+#cursor .tag{
+  position:absolute;left:20px;top:-30px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);padding:3px 7px;
+  opacity:0;transform:translateY(4px);transition:all .25s var(--ease);white-space:nowrap;
+}
+#cursor .coords{
+  position:absolute;left:18px;top:14px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink-2);white-space:nowrap;
+}
+html.is-hover #cursor .cx,html.is-hover #cursor .cy{opacity:.18;transform:scale(.55)}
+html.is-hover #cursor .dot{transform:scale(1.7)}
+html.is-hover #cursor .br{opacity:1}
+html.is-hover #cursor .b1{transform:translate(-3px,-3px)}
+html.is-hover #cursor .b2{transform:translate(3px,-3px)}
+html.is-hover #cursor .b3{transform:translate(-3px,3px)}
+html.is-hover #cursor .b4{transform:translate(3px,3px)}
+html.is-hover #cursor .tag{opacity:1;transform:translateY(0)}
+html.is-down #cursor .dot{transform:scale(.8)}
+
+/* micro-drone companion */
+#drone{
+  position:fixed;left:0;top:0;z-index:80;pointer-events:none;
+  width:64px;opacity:0;transition:opacity .4s;
+  will-change:transform;
+}
+html.drone-live #drone{opacity:1}
+#drone .frame{transition:transform .12s linear}
+#drone .roll-wrap{transform-origin:32px 22px}
+#drone.roll .roll-wrap{animation:roll .7s var(--ease)}
+@keyframes roll{to{transform:rotate(360deg)}}
+#drone .prop{transform-origin:center;animation:prop .14s linear infinite}
+@keyframes prop{
+  0%{transform:scaleX(1);opacity:.85}
+  50%{transform:scaleX(.35);opacity:.3}
+  100%{transform:scaleX(1);opacity:.85}
+}
+#drone .led{animation:blink 1.2s steps(2,start) infinite}
+
+/* ============================================================
+   MOTION PREFERENCES
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  [data-rv]{opacity:1;transform:none}
+  .hl > span{transform:none}
+  .hero-sub,.hero-meta{opacity:1;transform:none}
+  #drone{display:none}
+  .sig img{clip-path:none}
+}
+</style>
+</head>
+<body>
+
+<a class="mono" href="#work" style="position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:10px 14px;z-index:200" onfocus="this.style.left='12px';this.style.top='12px'" onblur="this.style.left='-9999px'">Skip to work</a>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" data-cursor="HOME">Lawrence Lei-Ramirez</a>
+    <div class="nav-right">
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#work" data-cursor="VIEW">Work</a></li>
+          <li><a href="#about" data-cursor="VIEW">About</a></li>
+          <li><a href="#contact" data-cursor="VIEW">Contact</a></li>
+        </ul>
+      </nav>
+      <span class="clock" id="clock" title="Local time — Little Rock, AR">LIT 00:00:00</span>
+      <button class="dip" id="themeBtn" aria-label="Toggle dark mode" data-cursor="THEME">
+        <span class="pip l"></span><span class="knob"></span><span class="pip r"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow mono"><span class="rule"></span>Portfolio — Rev 2.0 · Little Rock, AR</p>
+      <h1>
+        <span class="hl"><span>Built,</span></span>
+        <span class="hl"><span>not bought.</span></span>
+      </h1>
+      <p class="hero-sub">Hi, I'm <strong>Lawrence</strong> — a 15-year-old engineer. Embedded systems, PCBs, drones, and whatever's next.</p>
+      <div class="hero-meta">
+        <span class="status mono"><span class="pulse"></span>Open to projects &amp; collaboration</span>
+        <a class="scroll-cue mono" href="#work" data-cursor="SCROLL"><span class="ln"></span>Selected work</a>
+      </div>
+    </div>
+    <span class="hero-coords mono" aria-hidden="true">34.7465° N — 92.2896° W</span>
+  </section>
+
+  <!-- ================= MARQUEE ================= -->
+  <div class="mq" aria-hidden="true">
+    <div class="mq-track">
+      <div class="mq-row mono">
+        <span>Embedded systems</span><span class="sep">/</span>
+        <span>PCB design</span><span class="sep">/</span>
+        <span>Computer vision</span><span class="sep">/</span>
+        <span>3D printing</span><span class="sep">/</span>
+        <span>Robotics</span><span class="sep">/</span>
+        <span>CircuitPython</span><span class="sep">/</span>
+        <span>Swift</span><span class="sep">/</span>
+        <span>CAD</span><span class="sep">/</span>
+      </div>
+      <div class="mq-row mono">
+        <span>Embedded systems</span><span class="sep">/</span>
+        <span>PCB design</span><span class="sep">/</span>
+        <span>Computer vision</span><span class="sep">/</span>
+        <span>3D printing</span><span class="sep">/</span>
+        <span>Robotics</span><span class="sep">/</span>
+        <span>CircuitPython</span><span class="sep">/</span>
+        <span>Swift</span><span class="sep">/</span>
+        <span>CAD</span><span class="sep">/</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= WORK ================= -->
+  <section id="work" aria-label="Selected work">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono">01 / Selected work</span>
+        <span class="rule"></span>
+        <span class="sec-count mono">2 entries</span>
+      </div>
+
+      <!-- PROJECT 01 -->
+      <article class="proj" data-rv>
+        <button class="proj-toggle" aria-expanded="false" aria-controls="p1" data-cursor="EXPAND">
+          <span class="proj-idx">01</span>
+          <span class="proj-title">Analysis of Stress Distribution Across Drone Frames in Crash Impacts</span>
+          <span class="proj-side">
+            <span class="proj-meta mono">2026 · Independent research</span>
+            <span class="proj-state mono"><span class="led ok"></span>Completed</span>
+            <span class="proj-arrow">+</span>
+          </span>
+        </button>
+        <div class="proj-panel" id="p1">
+          <div class="proj-panel-in">
+            <div class="proj-body">
+              <div class="proj-copy">
+                <p class="lede">A custom stress-testing rig — load cells, CircuitPython, and 3D-printed frames — built to capture real impact forces and turn crash damage into quantifiable structural data.</p>
+                <p>Drones have become more popular over the years, with new drone pilots who may crash during their initial learning period. Understanding how impact forces are distributed across a drone's frame can allow for further structural improvements that lessen damage and repair costs when a crash occurs. The frames were 3D printed as a cost-effective way of producing test articles for repeated crash testing.</p>
+                <p>Five load-cell sensors were placed in pre-determined locations within the frame — one on each arm and one in the center — and data was captured by dropping the instrumented frame from 5 feet. Results were analyzed with ANOVA and Kruskal-Wallis tests; the Kruskal-Wallis test yielded a p-value of 0.001, indicating statistical significance. The center of the frame (Sensor 5) most frequently recorded the highest peak force, alongside physical cracks on two frames during testing — supporting the hypothesis that impact loading concentrates at the center.</p>
+                <p class="kw mono"><b>Keywords:</b> Drone / Load cells / Impact force / Structural</p>
+                <div class="stats">
+                  <div class="stat"><span class="k mono">P-value</span><span class="v">0.001</span></div>
+                  <div class="stat"><span class="k mono">Load cells</span><span class="v">×5</span></div>
+                  <div class="stat"><span class="k mono">Drop height</span><span class="v">5 ft</span></div>
+                  <div class="stat"><span class="k mono">Analysis</span><span class="v">K-W</span></div>
+                </div>
+              </div>
+              <div class="proj-media">
+                <figure>
+                  <div class="ph r3x2" data-file="01-drone-main.jpg">
+                    <img src="images/01-drone-main.jpg" alt="3D-printed yellow drone test frame with embedded load-cell sensors" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+                  </div>
+                  <figcaption class="mono">Fig. 01 — Instrumented test frame</figcaption>
+                </figure>
+                <div class="gallery">
+                  <figure>
+                    <div class="ph r4x3" data-file="01-drone-poster.jpg">
+                      <img src="images/01-drone-poster.jpg" alt="Research poster — force distribution across drone frames" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+                    </div>
+                    <figcaption class="mono">Fig. 02 — Research poster</figcaption>
+                  </figure>
+                  <figure>
+                    <div class="ph r4x3" data-file="01-drone-rig.jpg">
+                      <img src="images/01-drone-rig.jpg" alt="Load-cell drop test rig wired to the data-capture board" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+                    </div>
+                    <figcaption class="mono">Fig. 03 — Drop-test rig</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 02 -->
+      <article class="proj" data-rv>
+        <button class="proj-toggle" aria-expanded="false" aria-controls="p2" data-cursor="EXPAND">
+          <span class="proj-idx">02</span>
+          <span class="proj-title">Project Ferros</span>
+          <span class="proj-side">
+            <span class="proj-meta mono">Robotics · Computer vision</span>
+            <span class="proj-state mono"><span class="led dev"></span>In development</span>
+            <span class="proj-arrow">+</span>
+          </span>
+        </button>
+        <div class="proj-panel" id="p2">
+          <div class="proj-panel-in">
+            <div class="proj-body">
+              <div class="proj-copy">
+                <p class="lede">An AI-assisted robotic arm that dispenses solder autonomously, in real time, by detecting the operator's soldering-iron placement gesture.</p>
+                <p>Built entirely from 3D-printed parts, custom PCBs, and computer vision running on an onboard depth camera — a third hand for the workbench that watches where the iron lands and feeds solder exactly there.</p>
+                <p class="dev-note">This project is currently in active development. Full documentation, results, and images will be released when completed.</p>
+              </div>
+              <div class="proj-media">
+                <figure>
+                  <div class="ph r3x2" data-file="02-ferros-main.jpg">
+                    <img src="images/02-ferros-main.jpg" alt="Project Ferros — robotic solder-dispensing arm (in development)" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+                  </div>
+                  <figcaption class="mono">Fig. 04 — Hardware reveal pending</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about" aria-label="About">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono">02 / About</span>
+        <span class="rule"></span>
+        <span class="sec-count mono">EST. 2010</span>
+      </div>
+      <div class="about-grid">
+        <h2 class="about-statement" data-rv>Creating robotics and computer-vision systems that bridge <em>software, hardware, and automation.</em></h2>
+        <div class="about-col">
+          <p data-rv>I'm a student engineer passionate about robotics, embedded systems, and AI-assisted automation. I enjoy designing and building projects that combine software, hardware, and mechanical engineering to solve real-world problems through innovation and hands-on experimentation.</p>
+          <p data-rv>Most of what I know comes from building: printing a part, breaking it, and printing a better one. The name of this site is the method.</p>
+
+          <figure class="about-fig" data-rv>
+            <div class="ph r4x3" data-file="about-portrait.jpg">
+              <img src="images/about-portrait.jpg" alt="Lawrence soldering at the workbench" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+            </div>
+            <figcaption class="mono">At the bench — Little Rock, AR</figcaption>
+          </figure>
+
+          <ul class="caps" data-rv>
+            <li><span class="ci mono">01</span><span class="cn">Embedded systems</span><span class="cd">CircuitPython · microcontrollers · sensor integration</span></li>
+            <li><span class="ci mono">02</span><span class="cn">PCB design</span><span class="cd">EasyEDA · schematic to fab-ready boards</span></li>
+            <li><span class="ci mono">03</span><span class="cn">Digital fabrication</span><span class="cd">CAD · FDM 3D printing · rapid iteration</span></li>
+            <li><span class="ci mono">04</span><span class="cn">Computer vision</span><span class="cd">Depth cameras · gesture detection</span></li>
+            <li><span class="ci mono">05</span><span class="cn">iOS development</span><span class="cd">Swift · SwiftUI</span></li>
+            <li><span class="ci mono">06</span><span class="cn">Community</span><span class="cd">Founder — hardware Hack Club, LR Central High</span></li>
+          </ul>
+
+          <figure class="sig" data-rv>
+            <div class="sig-frame ph" data-file="signature.png">
+              <img src="images/signature.png" alt="Lawrence Lei-Ramirez — signature" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+            </div>
+            <figcaption class="mono">L. Lei-Ramirez</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="contact" aria-label="Contact">
+    <div class="wrap">
+      <div class="sec-head" style="border:0">
+        <span class="mono">03 / Contact</span>
+        <span class="rule"></span>
+        <span class="sec-count mono">Response &lt; 48h</span>
+      </div>
+      <h2 data-rv>Let's build something.</h2>
+      <a class="mail tlink" href="mailto:lawrenceleiramirez.contact@gmail.com" data-cursor="WRITE" data-rv>lawrenceleiramirez.contact@gmail.com</a>
+
+      <ul class="soc" data-rv>
+        <li><a href="https://github.com/1LawRam" target="_blank" rel="noopener" data-cursor="VISIT">
+          <span class="si mono">01</span><span class="sn">GitHub</span><span class="sh mono">@1LawRam</span><span class="sa">↗</span></a></li>
+        <li><a href="https://www.linkedin.com/in/lawrence-lei-ramirez/" target="_blank" rel="noopener" data-cursor="VISIT">
+          <span class="si mono">02</span><span class="sn">LinkedIn</span><span class="sh mono">/lawrence-lei-ramirez</span><span class="sa">↗</span></a></li>
+        <li><a href="https://orcid.org/0009-0003-3152-4851" target="_blank" rel="noopener" data-cursor="VISIT">
+          <span class="si mono">03</span><span class="sn">ORCID</span><span class="sh mono">0009-0003-3152-4851</span><span class="sa">↗</span></a></li>
+        <li><a href="https://www.instagram.com/1lawram/" target="_blank" rel="noopener" data-cursor="VISIT">
+          <span class="si mono">04</span><span class="sn">Instagram</span><span class="sh mono">@1lawram</span><span class="sa">↗</span></a></li>
+        <li><a href="https://x.com/1LawRam" target="_blank" rel="noopener" data-cursor="VISIT">
+          <span class="si mono">05</span><span class="sn">X</span><span class="sh mono">@1LawRam</span><span class="sa">↗</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER / TITLE BLOCK ================= -->
+  <footer class="foot">
+    <div class="wrap">
+      <div class="tblock" role="presentation">
+        <div class="tb"><span class="k">Title</span><span class="v serif">Personal Portfolio — "Built, not bought."</span></div>
+        <div class="tb"><span class="k">Drawn by</span><span class="v">L. Lei-Ramirez</span></div>
+        <div class="tb"><span class="k">Location</span><span class="v">Little Rock, AR</span></div>
+        <div class="tb"><span class="k">Date</span><span class="v">Jun 2026</span></div>
+        <div class="tb"><span class="k">Scale</span><span class="v">1 : 1</span></div>
+        <div class="tb"><span class="k">Rev</span><button class="tb-rev" id="revBtn" data-cursor="???" title="Revision history">2.0</button></div>
+      </div>
+      <div class="foot-bar">
+        <div class="grp">
+          <span class="mono">© 2026 Lawrence Lei-Ramirez</span>
+          <span class="mono" aria-hidden="true">Designed &amp; drafted by hand</span>
+        </div>
+        <div class="grp">
+          <button class="ctl" id="gridBtn" aria-pressed="false" data-cursor="GRID">Grid: off — [G]</button>
+          <button class="ctl" id="droneBtn" aria-pressed="true" data-cursor="DRONE">Drone: on</button>
+          <a class="totop" href="#top" data-cursor="TOP">Back to top ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- ================= OVERLAYS ================= -->
+<div class="grid-ol" aria-hidden="true"><span class="tag">Grid 8 / 80 — [G] to hide</span></div>
+
+<div id="cursor" aria-hidden="true">
+  <span class="cx"></span><span class="cy"></span><span class="dot"></span>
+  <span class="br b1"></span><span class="br b2"></span><span class="br b3"></span><span class="br b4"></span>
+  <span class="tag"></span>
+  <span class="coords">X 0000 · Y 0000</span>
+</div>
+
+<div id="drone" aria-hidden="true">
+  <svg viewBox="0 0 64 44" width="64" height="44" fill="none">
+    <g class="roll-wrap">
+      <g class="frame">
+        <!-- arms -->
+        <path d="M20 22 L10 13 M44 22 L54 13" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
+        <!-- motor pods -->
+        <rect x="7" y="9" width="6" height="5" rx="1" fill="var(--ink)"/>
+        <rect x="51" y="9" width="6" height="5" rx="1" fill="var(--ink)"/>
+        <!-- props -->
+        <g class="prop"><rect x="1" y="7" width="18" height="2" rx="1" fill="var(--ink-2)"/></g>
+        <g class="prop" style="animation-delay:.05s"><rect x="45" y="7" width="18" height="2" rx="1" fill="var(--ink-2)"/></g>
+        <!-- body (caution yellow, like the printed frame) -->
+        <rect x="18" y="17" width="28" height="13" rx="4" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+        <!-- camera -->
+        <circle cx="42" cy="23.5" r="3" fill="var(--ink)"/>
+        <circle cx="43" cy="22.6" r="1" fill="var(--paper)"/>
+        <!-- tail LED -->
+        <circle class="led" cx="20.5" cy="20.5" r="1.6" fill="#E04A3F"/>
+        <!-- skids -->
+        <path d="M23 30 v4 h6 M41 30 v4 h-6" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<script>
+(function(){
+  var docEl = document.documentElement;
+  docEl.classList.add('js');
+
+  var fine = window.matchMedia('(pointer:fine)').matches;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- load-in ---------- */
+  window.addEventListener('load', function(){ docEl.classList.add('loaded'); });
+  setTimeout(function(){ docEl.classList.add('loaded'); }, 900); // fallback
+
+  /* ---------- clock (Little Rock / Central) ---------- */
+  var clock = document.getElementById('clock');
+  function tick(){
+    try{
+      var t = new Intl.DateTimeFormat('en-US',{
+        timeZone:'America/Chicago',hour12:false,
+        hour:'2-digit',minute:'2-digit',second:'2-digit'
+      }).format(new Date());
+      clock.textContent = 'LIT ' + t;
+    }catch(e){ clock.textContent = ''; }
+  }
+  tick(); setInterval(tick,1000);
+
+  /* ---------- theme DIP switch ---------- */
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var dark = docEl.getAttribute('data-theme') === 'dark';
+    docEl.setAttribute('data-theme', dark ? 'light' : 'dark');
+  });
+
+  /* ---------- drafting grid : G key + footer button ---------- */
+  var gridBtn = document.getElementById('gridBtn');
+  function setGrid(on){
+    docEl.classList.toggle('grid-on', on);
+    gridBtn.setAttribute('aria-pressed', on);
+    gridBtn.textContent = on ? 'Grid: on — [G]' : 'Grid: off — [G]';
+  }
+  gridBtn.addEventListener('click', function(){ setGrid(!docEl.classList.contains('grid-on')); });
+  window.addEventListener('keydown', function(e){
+    if((e.key==='g'||e.key==='G') && !e.metaKey && !e.ctrlKey && !e.altKey){
+      setGrid(!docEl.classList.contains('grid-on'));
+    }
+  });
+
+  /* ---------- expandable case files ---------- */
+  document.querySelectorAll('.proj-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var art = btn.closest('.proj');
+      var open = art.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      btn.setAttribute('data-cursor', open ? 'COLLAPSE' : 'EXPAND');
+      var tag = document.querySelector('#cursor .tag');
+      if(tag && docEl.classList.contains('is-hover')) tag.textContent = open ? 'COLLAPSE' : 'EXPAND';
+    });
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      }
+    });
+  },{threshold:.15});
+  document.querySelectorAll('[data-rv], .sig').forEach(function(el){ io.observe(el); });
+
+  /* ---------- crosshair cursor + coords ---------- */
+  var cursor = document.getElementById('cursor');
+  var coords = cursor.querySelector('.coords');
+  var ctag = cursor.querySelector('.tag');
+  var mx = innerWidth/2, my = innerHeight/2, moved = false;
+
+  if(fine){
+    window.addEventListener('pointermove', function(e){
+      mx = e.clientX; my = e.clientY;
+      cursor.style.transform = 'translate3d('+mx+'px,'+my+'px,0)';
+      coords.textContent = 'X ' + String(Math.round(mx)).padStart(4,'0') +
+                           ' · Y ' + String(Math.round(my)).padStart(4,'0');
+      if(!moved){ moved = true; docEl.classList.add('cursor-live'); if(!reduce) docEl.classList.add('drone-live'); }
+    }, {passive:true});
+
+    window.addEventListener('pointerdown', function(){ docEl.classList.add('is-down'); });
+    window.addEventListener('pointerup', function(){ docEl.classList.remove('is-down'); });
+
+    document.addEventListener('pointerover', function(e){
+      var t = e.target.closest('a,button,[data-cursor]');
+      if(t){
+        docEl.classList.add('is-hover');
+        ctag.textContent = t.getAttribute('data-cursor') ||
+          (t.tagName === 'A' ? 'OPEN' : 'PRESS');
+      }else{
+        docEl.classList.remove('is-hover');
+      }
+    });
+    document.addEventListener('pointerleave', function(){ docEl.classList.remove('is-hover'); });
+  }
+
+  /* ---------- micro-drone companion ---------- */
+  var drone = document.getElementById('drone');
+  var frame = drone.querySelector('.frame');
+  var droneOn = true;
+  var dx = mx, dy = my, pvx = 0;
+  var t0 = performance.now();
+
+  function fly(now){
+    var bob = Math.sin((now - t0)/420) * 3.5;
+    var tx = mx + 30, ty = my - 52;
+    var nx = dx + (tx - dx) * 0.085;
+    var ny = dy + (ty - dy) * 0.085;
+    var vx = nx - dx;
+    pvx = pvx + (vx - pvx) * .2;
+    dx = nx; dy = ny;
+    var tilt = Math.max(-16, Math.min(16, pvx * 1.6));
+    drone.style.transform = 'translate3d(' + (dx - 32) + 'px,' + (dy - 22 + bob) + 'px,0)';
+    frame.style.transform = 'rotate(' + tilt + 'deg)';
+    requestAnimationFrame(fly);
+  }
+  if(fine && !reduce) requestAnimationFrame(fly);
+
+  var droneBtn = document.getElementById('droneBtn');
+  droneBtn.addEventListener('click', function(){
+    droneOn = !droneOn;
+    droneBtn.setAttribute('aria-pressed', droneOn);
+    droneBtn.textContent = droneOn ? 'Drone: on' : 'Drone: off';
+    if(droneOn && fine && !reduce){ docEl.classList.add('drone-live'); }
+    else{ docEl.classList.remove('drone-live'); }
+  });
+
+  /* ---------- REV 2.0 — barrel roll ---------- */
+  document.getElementById('revBtn').addEventListener('click', function(){
+    if(!docEl.classList.contains('drone-live')) return;
+    drone.classList.remove('roll');
+    void drone.offsetWidth; /* restart animation */
+    drone.classList.add('roll');
+  });
+
+})();
+</script>
+</body>
+</html>
