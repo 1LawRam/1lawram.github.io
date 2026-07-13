@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<!--
-  ============================================================
-  LAWRENCE LEI-RAMIREZ — PORTFOLIO  (REV 2.0)
-  ============================================================
--->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lawrence Lei-Ramirez — Engineer</title>
@@ -16,9 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-/* ============================================================
-   TOKENS
-   ============================================================ */
 :root{
   --paper:#F2F1ED;
   --paper-2:#EAE9E3;
@@ -26,7 +18,7 @@
   --ink-2:#6E6B63;
   --line:#D7D4CB;
   --line-2:#C6C3B9;
-  --accent:#F2B705;        /* caution yellow — same as the printed frame */
+  --accent:#F2B705;        
   --accent-ink:#161513;
   --grid-minor:rgba(22,21,19,.055);
   --grid-major:rgba(22,21,19,.16);
@@ -49,9 +41,6 @@ html[data-theme="dark"]{
   --grid-major:rgba(236,233,225,.17);
 }
 
-/* ============================================================
-   BASE
-   ============================================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -78,7 +67,6 @@ button{font:inherit;color:inherit;background:none;border:0}
 .wrap{width:min(1240px,100% - 48px);margin-inline:auto}
 @media (max-width:640px){.wrap{width:calc(100% - 40px)}}
 
-/* mono utility */
 .mono{
   font-family:var(--mono);
   font-size:11px;
@@ -87,7 +75,6 @@ button{font:inherit;color:inherit;background:none;border:0}
   font-weight:500;
 }
 
-/* underlined text link — flat, no gradients */
 .tlink{
   text-decoration:none;
   background-image:linear-gradient(var(--ink),var(--ink));
@@ -102,13 +89,9 @@ button{font:inherit;color:inherit;background:none;border:0}
   background-size:100% 3px;
 }
 
-/* reveal-on-scroll */
 [data-rv]{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 [data-rv].in{opacity:1;transform:none}
 
-/* ============================================================
-   NAV
-   ============================================================ */
 .nav{
   position:fixed;inset:0 0 auto 0;height:var(--nav-h);z-index:50;
   background:color-mix(in srgb,var(--paper) 88%,transparent);
@@ -136,7 +119,7 @@ button{font:inherit;color:inherit;background:none;border:0}
   font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-2);
   border:1px solid var(--line);padding:5px 10px;white-space:nowrap;
 }
-/* DIP-switch theme toggle */
+
 .dip{
   width:46px;height:24px;border:1px solid var(--ink);position:relative;flex:none;
   display:flex;align-items:center;padding:3px;transition:border-color .3s;
@@ -152,9 +135,6 @@ html[data-theme="dark"] .dip .knob{transform:translateX(20px);background:var(--a
   .clock{display:none}
 }
 
-/* ============================================================
-   HERO
-   ============================================================ */
 .hero{
   min-height:100svh;display:flex;flex-direction:column;justify-content:center;
   padding:calc(var(--nav-h) + 56px) 0 64px;position:relative;
@@ -209,9 +189,6 @@ html.loaded .hero-meta{opacity:1}
 }
 @media (max-width:1320px){.hero-coords{display:none}}
 
-/* ============================================================
-   MARQUEE
-   ============================================================ */
 .mq{
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   overflow:hidden;padding:15px 0;background:var(--paper-2);
@@ -223,9 +200,6 @@ html.loaded .hero-meta{opacity:1}
 .mq-row .sep{color:var(--accent);padding:0}
 @keyframes mq{to{transform:translateX(-50%)}}
 
-/* ============================================================
-   SECTIONS
-   ============================================================ */
 section{scroll-margin-top:calc(var(--nav-h) + 18px)}
 .sec-head{
   display:flex;align-items:baseline;gap:18px;
@@ -234,9 +208,6 @@ section{scroll-margin-top:calc(var(--nav-h) + 18px)}
 .sec-head .rule{flex:1;height:1px;background:var(--line);align-self:center}
 .sec-count{color:var(--ink-2)}
 
-/* ============================================================
-   WORK
-   ============================================================ */
 .proj{border-top:1px solid var(--line)}
 .proj:last-of-type{border-bottom:1px solid var(--line)}
 .proj-toggle{
@@ -309,9 +280,6 @@ figure figcaption{margin-top:10px;color:var(--ink-2)}
   .proj-side{grid-column:2;flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;text-align:left}
 }
 
-/* ============================================================
-   IMAGE PLACEHOLDERS (auto-fallback)
-   ============================================================ */
 .ph{position:relative;border:1px solid var(--line);background:var(--paper-2)}
 .ph img{width:100%;height:100%;object-fit:cover;aspect-ratio:inherit}
 .ph.r3x2{aspect-ratio:3/2}
@@ -337,9 +305,6 @@ figure figcaption{margin-top:10px;color:var(--ink-2)}
   overflow:hidden;text-overflow:ellipsis;
 }
 
-/* ============================================================
-   ABOUT
-   ============================================================ */
 .about-grid{
   display:grid;grid-template-columns:1.05fr .95fr;gap:72px;padding-bottom:110px;
 }
@@ -378,9 +343,6 @@ html[data-theme="dark"] .sig img{filter:invert(1)}
   .about-statement{position:static}
 }
 
-/* ============================================================
-   CONTACT
-   ============================================================ */
 .contact{border-top:1px solid var(--line);padding-bottom:110px}
 .contact h2{
   font-family:var(--serif);font-weight:400;
@@ -414,9 +376,6 @@ html[data-theme="dark"] .sig img{filter:invert(1)}
   .soc .sh{display:none}
 }
 
-/* ============================================================
-   FOOTER — drawing title block
-   ============================================================ */
 .foot{border-top:2px solid var(--ink)}
 .tblock{
   display:grid;
@@ -450,10 +409,7 @@ html[data-theme="dark"] .sig img{filter:invert(1)}
   .tblock{grid-template-columns:1fr 1fr}
 }
 
-/* ============================================================
-   OVERLAYS — grid, cursor, drone
-   ============================================================ */
-.grid-ol{
+
   position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0;
   transition:opacity .35s ease;
   background-image:
@@ -470,7 +426,6 @@ html[data-theme="dark"] .sig img{filter:invert(1)}
 }
 html.grid-on .grid-ol{opacity:1}
 
-/* crosshair cursor */
 #cursor{
   position:fixed;left:0;top:0;z-index:90;pointer-events:none;
   width:0;height:0;opacity:0;transition:opacity .3s;
@@ -511,12 +466,11 @@ html.is-hover #cursor .b4{transform:translate(3px,3px)}
 html.is-hover #cursor .tag{opacity:1;transform:translateY(0)}
 html.is-down #cursor .dot{transform:scale(.8)}
 
-/* micro-drone companion */
 #drone{
   position:fixed;left:0;top:0;z-index:80;pointer-events:none;
   width:64px;opacity:0;transition:opacity .4s;
   will-change:transform;
-  /* lock the drone's palette — dark mode must not flip its outlines */
+
   --ink:#161513;--ink-2:#6E6B63;--paper:#F2F1ED;--accent:#F2B705;
 }
 html.drone-live #drone{opacity:1}
@@ -533,12 +487,6 @@ html[data-theme="dark"] #drone svg{filter:drop-shadow(0 0 4px rgba(242,241,237,.
 }
 #drone .led{animation:blink 1.2s steps(2,start) infinite}
 
-/* ============================================================
-   FLASHLIGHT — dark mode + desktop only
-   The circle inverts whatever is behind it (dark theme flips
-   to light inside the beam); the giant shadow blacks out the
-   rest of the page.
-   ============================================================ */
 #torch{
   position:fixed;left:0;top:0;width:340px;height:340px;border-radius:50%;
   z-index:74;pointer-events:none;opacity:0;transition:opacity .45s ease;
@@ -559,19 +507,15 @@ html.torch-on #torch{opacity:1}
   background:linear-gradient(90deg,rgba(255,236,170,.32),rgba(255,236,170,.10) 55%,rgba(255,236,170,0) 92%);
 }
 html.torch-on.drone-live #beam{opacity:1}
-/* crosshair flips to ink inside the lit area */
+
 html.torch-on #cursor .cx,html.torch-on #cursor .cy{background:#161513}
 html.torch-on #cursor .br{border-color:#161513}
 html.torch-on #cursor .coords{color:#3c3a36}
 html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
 
-/* parked drone — touch devices */
 #drone.parked{pointer-events:auto;touch-action:none}
 #drone.parked .prop{animation:none}
 
-/* ============================================================
-   MOTION PREFERENCES
-   ============================================================ */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -587,7 +531,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
 
 <a class="mono" href="#work" style="position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:10px 14px;z-index:200" onfocus="this.style.left='12px';this.style.top='12px'" onblur="this.style.left='-9999px'">Skip to work</a>
 
-<!-- ================= NAV ================= -->
 <header class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" data-cursor="HOME">Lawrence Lei-Ramirez</a>
@@ -609,7 +552,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
 
 <main id="top">
 
-  <!-- ================= HERO ================= -->
   <section class="hero">
     <div class="wrap">
       <p class="hero-eyebrow mono"><span class="rule"></span>Portfolio — Rev 2.0 · Little Rock, AR</p>
@@ -626,7 +568,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     <span class="hero-coords mono" aria-hidden="true">34.7465° N — 92.2896° W</span>
   </section>
 
-  <!-- ================= MARQUEE ================= -->
   <div class="mq" aria-hidden="true">
     <div class="mq-track">
       <div class="mq-row mono">
@@ -652,7 +593,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     </div>
   </div>
 
-  <!-- ================= WORK ================= -->
   <section id="work" aria-label="Selected work">
     <div class="wrap">
       <div class="sec-head">
@@ -660,8 +600,7 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
         <span class="rule"></span>
         <span class="sec-count mono">2 entries</span>
       </div>
-
-      <!-- PROJECT 01 -->
+      
       <article class="proj" data-rv>
         <button class="proj-toggle" aria-expanded="false" aria-controls="p1" data-cursor="EXPAND">
           <span class="proj-idx">01</span>
@@ -714,7 +653,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
         </div>
       </article>
 
-      <!-- PROJECT 02 -->
       <article class="proj" data-rv>
         <button class="proj-toggle" aria-expanded="false" aria-controls="p2" data-cursor="EXPAND">
           <span class="proj-idx">02</span>
@@ -749,7 +687,7 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     </div>
   </section>
 
-  <!-- ================= ABOUT ================= -->
+
   <section id="about" aria-label="About">
     <div class="wrap">
       <div class="sec-head">
@@ -790,7 +728,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     </div>
   </section>
 
-  <!-- ================= CONTACT ================= -->
   <section id="contact" class="contact" aria-label="Contact">
     <div class="wrap">
       <div class="sec-head" style="border:0">
@@ -816,7 +753,7 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     </div>
   </section>
 
-  <!-- ================= FOOTER / TITLE BLOCK ================= -->
+
   <footer class="foot">
     <div class="wrap">
       <div class="tblock" role="presentation">
@@ -843,7 +780,7 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
 
 </main>
 
-<!-- ================= OVERLAYS ================= -->
+
 <div class="grid-ol" aria-hidden="true"><span class="tag">Grid 8 / 80 — [G] to hide</span></div>
 
 <div id="torch" aria-hidden="true"></div>
@@ -860,22 +797,22 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
   <svg viewBox="0 0 64 44" width="64" height="44" fill="none">
     <g class="roll-wrap">
       <g class="frame">
-        <!-- arms -->
+
         <path d="M20 22 L10 13 M44 22 L54 13" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
-        <!-- motor pods -->
+
         <rect x="7" y="9" width="6" height="5" rx="1" fill="var(--ink)"/>
         <rect x="51" y="9" width="6" height="5" rx="1" fill="var(--ink)"/>
-        <!-- props -->
+
         <g class="prop"><rect x="1" y="7" width="18" height="2" rx="1" fill="var(--ink-2)"/></g>
         <g class="prop" style="animation-delay:.05s"><rect x="45" y="7" width="18" height="2" rx="1" fill="var(--ink-2)"/></g>
-        <!-- body (caution yellow, like the printed frame) -->
+
         <rect x="18" y="17" width="28" height="13" rx="4" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
-        <!-- camera -->
+
         <circle cx="42" cy="23.5" r="3" fill="var(--ink)"/>
         <circle cx="43" cy="22.6" r="1" fill="var(--paper)"/>
-        <!-- tail LED -->
+
         <circle class="led" cx="20.5" cy="20.5" r="1.6" fill="#E04A3F"/>
-        <!-- skids -->
+
         <path d="M23 30 v4 h6 M41 30 v4 h-6" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
       </g>
     </g>
@@ -890,11 +827,11 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
   var fine = window.matchMedia('(pointer:fine)').matches;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- load-in ---------- */
+
   window.addEventListener('load', function(){ docEl.classList.add('loaded'); });
   setTimeout(function(){ docEl.classList.add('loaded'); }, 900); // fallback
 
-  /* ---------- clock (Little Rock / Central) ---------- */
+
   var clock = document.getElementById('clock');
   function tick(){
     try{
@@ -907,13 +844,13 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
   }
   tick(); setInterval(tick,1000);
 
-  /* ---------- theme DIP switch ---------- */
+
   document.getElementById('themeBtn').addEventListener('click', function(){
     var dark = docEl.getAttribute('data-theme') === 'dark';
     docEl.setAttribute('data-theme', dark ? 'light' : 'dark');
   });
 
-  /* ---------- drafting grid : G key + footer button ---------- */
+
   var gridBtn = document.getElementById('gridBtn');
   function setGrid(on){
     docEl.classList.toggle('grid-on', on);
@@ -927,7 +864,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     }
   });
 
-  /* ---------- expandable case files ---------- */
   document.querySelectorAll('.proj-toggle').forEach(function(btn){
     btn.addEventListener('click', function(){
       var art = btn.closest('.proj');
@@ -939,7 +875,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     });
   });
 
-  /* ---------- reveal on scroll ---------- */
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(en.isIntersecting){
@@ -950,7 +885,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
   },{threshold:.15});
   document.querySelectorAll('[data-rv], .sig').forEach(function(el){ io.observe(el); });
 
-  /* ---------- crosshair cursor + coords ---------- */
   var cursor = document.getElementById('cursor');
   var coords = cursor.querySelector('.coords');
   var ctag = cursor.querySelector('.tag');
@@ -985,14 +919,13 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     document.addEventListener('pointerleave', function(){ docEl.classList.remove('is-hover'); });
   }
 
-  /* ---------- micro-drone companion ---------- */
   var drone = document.getElementById('drone');
   var frame = drone.querySelector('.frame');
   var droneOn = true;
   var coarse = !fine;
   var dx = mx, dy = my, pvx = 0;
-  var tX = mx, tY = my;                       /* flight target */
-  var mode = coarse ? 'parked' : 'follow';    /* follow | parked | tour | chase | return */
+  var tX = mx, tY = my;                      
+  var mode = coarse ? 'parked' : 'follow';    
   var wps = [], wpi = 0, idleTimer = null;
   var t0 = performance.now();
 
@@ -1006,7 +939,7 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
   }
   function doRoll(){
     drone.classList.remove('roll');
-    void drone.offsetWidth; /* restart animation */
+    void drone.offsetWidth; 
     drone.classList.add('roll');
   }
   function armIdle(){
@@ -1019,8 +952,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     }, 6000);
   }
 
-  /* touch devices: the drone perches in the corner — tap to launch,
-     tap anywhere to steer, it flies home and lands on its own */
   if(coarse && !reduce){
     docEl.classList.add('drone-live');
     park();
@@ -1059,7 +990,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     drone.style.transform = 'translate3d(' + (dx - 32) + 'px,' + (dy - 22 + bob) + 'px,0)';
     frame.style.transform = 'rotate(' + tilt + 'deg)';
 
-    /* mobile flight plan */
     if(coarse && flying){
       var ddx = tX - dx, ddy = tY - dy, d2 = ddx*ddx + ddy*ddy;
       if(mode === 'tour' && d2 < 2600){
@@ -1076,7 +1006,6 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
       }
     }
 
-    /* flashlight cone — drawn from the drone's lamp to the beam */
     if(docEl.classList.contains('torch-on')){
       var lx = dx + 10, ly = dy + 2 + bob;
       var ang = Math.atan2(my - ly, mx - lx);
@@ -1102,15 +1031,13 @@ html.torch-on #cursor .tag{background:#161513;color:#F2F1ED}
     setTorch();
   });
 
-  /* ---------- flashlight mode : dark theme + desktop only ---------- */
   function setTorch(){
     var dark = docEl.getAttribute('data-theme') === 'dark';
     docEl.classList.toggle('torch-on', dark && fine && !reduce && droneOn);
   }
   document.getElementById('themeBtn').addEventListener('click', setTorch);
   setTorch();
-
-  /* ---------- REV 2.0 — barrel roll ---------- */
+  
   document.getElementById('revBtn').addEventListener('click', function(){
     if(!docEl.classList.contains('drone-live')) return;
     doRoll();
