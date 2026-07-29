@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Ferros — Lawrence Lei-Ramirez</title>
+<meta name="description" content="Project Ferros — a vision- and thermal-guided arm that dispenses solder to the joint you double-tap with your iron. Full engineering package and $300 build.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B5651D'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='white' stroke-width='2.4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="../index.html">Lawrence Lei-Ramirez</a>
+    <div class="nav-right">
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="../index.html#work">Work</a></li>
+          <li><a href="arksef.html">Drone study</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="theme-btn" data-theme-btn aria-label="Toggle dark mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section style="padding-top:calc(var(--nav-h) + 84px);padding-bottom:40px">
+    <div class="wrap">
+      <a class="back-link" href="../index.html#work" style="margin-bottom:28px">
+        <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1l5 5-5 5"/></svg>
+        All work
+      </a>
+      <p class="eyebrow" data-rv style="margin-bottom:18px">Project Ferros · In development</p>
+      <h1 class="display" data-rv style="font-size:clamp(46px,8vw,96px);margin-bottom:24px;max-width:12ch">A third hand<br>that pays attention.</h1>
+      <p class="sub" data-rv style="max-width:56ch">
+        Ferros watches where your soldering iron lands, waits for the joint to actually reach
+        temperature, and feeds solder to that exact point. No foot pedal. No third hand you don't have.
+      </p>
+    </div>
+  </section>
+
+  <section class="stage" aria-label="How Ferros works">
+    <div class="stage-pin">
+
+      <svg class="stage-arm" id="arm" viewBox="0 0 760 520" fill="none" aria-hidden="true">
+
+        <g id="bench">
+          <path d="M60 453 H700" stroke="var(--divider)" stroke-width="5" stroke-linecap="round"/>
+          <rect x="336" y="404" width="168" height="48" rx="6" fill="var(--surface-2)" stroke="var(--divider)" stroke-width="1.5"/>
+          <g stroke="var(--ink-3)" stroke-width="1.6" stroke-linecap="round" opacity=".65">
+            <path d="M356 424h20M425 424h20M462 424h22M356 438h116"/>
+          </g>
+          <circle id="joint-target" cx="403" cy="424" r="4.5" fill="var(--ink-3)"/>
+        </g>
+
+        <g id="archframe" fill="none" stroke-linecap="round">
+          <g opacity=".4">
+            <path d="M420 66 C 502 128, 566 282, 578 424" stroke="var(--ink-3)" stroke-width="4.5"/>
+            <ellipse cx="579" cy="426" rx="18" ry="5" fill="var(--ink-3)" stroke="none"/>
+          </g>
+          <path d="M420 62 C 300 72, 168 214, 138 448" stroke="var(--ink-2)" stroke-width="5.5"/>
+          <path d="M420 62 C 540 72, 672 214, 702 448" stroke="var(--ink-2)" stroke-width="5.5"/>
+          <ellipse cx="136" cy="450" rx="22" ry="6" fill="var(--ink-2)" stroke="none"/>
+          <ellipse cx="704" cy="450" rx="22" ry="6" fill="var(--ink-2)" stroke="none"/>
+        </g>
+
+        <g id="rgbcones" opacity="0">
+          <g opacity=".45">
+            <path d="M520 223 L359 424 L447 424 Z" fill="var(--cam)" opacity=".16"/>
+            <path d="M520 223 L359 424 M520 223 L447 424" stroke="var(--cam)" stroke-width="1.1" opacity=".5"/>
+          </g>
+          <path d="M250 179 L359 424 L447 424 Z" fill="var(--cam)" opacity=".16"/>
+          <path d="M250 179 L359 424 M250 179 L447 424" stroke="var(--cam)" stroke-width="1.1" opacity=".55"/>
+          <path d="M590 178 L359 424 L447 424 Z" fill="var(--cam)" opacity=".16"/>
+          <path d="M590 178 L359 424 M590 178 L447 424" stroke="var(--cam)" stroke-width="1.1" opacity=".55"/>
+        </g>
+
+        <circle id="thermal" cx="403" cy="424" r="36" fill="var(--accent)" opacity="0"/>
+
+        <g id="vision" opacity="0">
+          <path d="M420 76 L252 452 L604 452 Z" fill="var(--focus)" opacity=".12"/>
+          <path d="M420 76 L252 452 M420 76 L604 452" stroke="var(--focus)" stroke-width="1.2" opacity=".45"/>
+        </g>
+
+        <g id="thermcone" opacity="0">
+          <path d="M420 76 L364 452 L452 452 Z" fill="var(--accent)" opacity=".2"/>
+          <path d="M420 76 L364 452 M420 76 L452 452" stroke="var(--accent)" stroke-width="1.2" opacity=".6"/>
+        </g>
+
+        <g id="base">
+          <rect x="136" y="430" width="128" height="22" rx="6" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.6"/>
+          <rect x="180" y="392" width="40" height="42" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.6"/>
+
+          <g id="shoulder">
+            <rect x="186" y="252" width="28" height="146" rx="13" fill="var(--bg)" stroke="var(--ink-2)" stroke-width="2.6"/>
+            <circle cx="200" cy="392" r="15" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.6"/>
+
+            <g id="elbow">
+              <rect x="189" y="152" width="22" height="106" rx="10" fill="var(--bg)" stroke="var(--ink-2)" stroke-width="2.6"/>
+              <circle cx="200" cy="252" r="13" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.6"/>
+
+              <g id="wrist">
+                <circle cx="200" cy="152" r="10" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.6"/>
+                <path d="M200 152 v-30" stroke="var(--ink-2)" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M186 122 h28 l-7 -22 h-14 z" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M200 100 v-18" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+              </g>
+            </g>
+          </g>
+        </g>
+
+        <g id="sensorhead">
+          <rect x="376" y="24" width="88" height="36" rx="12" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.6"/>
+          <circle cx="396" cy="42" r="6.5" fill="none" stroke="var(--ink-2)" stroke-width="2.2"/>
+          <circle cx="444" cy="42" r="6.5" fill="none" stroke="var(--ink-2)" stroke-width="2.2"/>
+          <circle id="cam-led" cx="420" cy="42" r="3.4" fill="var(--focus)" opacity=".25"/>
+          <rect x="404" y="60" width="32" height="13" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="2.2"/>
+        </g>
+
+        <g id="rgbcams">
+          <g opacity=".5" transform="translate(525,215) rotate(30)">
+            <rect x="-12" y="-8.5" width="24" height="17" rx="5" fill="var(--surface)" stroke="var(--ink-3)" stroke-width="2.2"/>
+            <circle cx="0" cy="10" r="5" fill="var(--surface)" stroke="var(--ink-3)" stroke-width="2"/>
+            <circle cx="0" cy="10" r="2.2" fill="var(--cam)"/>
+          </g>
+          <g transform="translate(245,171) rotate(-32)">
+            <rect x="-13" y="-9" width="26" height="18" rx="5" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.4"/>
+            <circle cx="0" cy="11" r="5.5" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.2"/>
+            <circle cx="0" cy="11" r="2.4" fill="var(--cam)"/>
+          </g>
+          <g transform="translate(595,171) rotate(37)">
+            <rect x="-13" y="-9" width="26" height="18" rx="5" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.4"/>
+            <circle cx="0" cy="11" r="5.5" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2.2"/>
+            <circle cx="0" cy="11" r="2.4" fill="var(--cam)"/>
+          </g>
+        </g>
+
+        <g id="taprings" fill="none" stroke="var(--focus)">
+          <circle id="ring1" cx="403" cy="424" r="8" stroke-width="2.4" opacity="0"/>
+          <circle id="ring2" cx="403" cy="424" r="8" stroke-width="1.6" opacity="0"/>
+        </g>
+
+        <circle id="bead" cx="403" cy="424" r="0" fill="var(--accent)"/>
+      </svg>
+
+      <div class="stage-caption">
+        <div class="stage-step on" data-step="0">
+          <span class="n">01</span>
+          <h3>Rest position</h3>
+          <p>The sensor arch stands over the work area. The arm parks clear of the board and waits — nothing moves until you give it something to look at.</p>
+        </div>
+        <div class="stage-step" data-step="1">
+          <span class="n">02</span>
+          <h3>The arch watches</h3>
+          <p>A depth camera and a thermal array look straight down from the apex. Midway up each of the three pillars, an RGB camera watches the same work area from its own angle — so a hand or a tall component can't hide the joint from every view at once.</p>
+        </div>
+        <div class="stage-step" data-step="2">
+          <span class="n">03</span>
+          <h3>Double-tap to designate</h3>
+          <p>Tap the joint twice with the iron tip. A piezo disc under the fixture catches both impulses, the camera confirms the tip was on the board, and that pad becomes the target.</p>
+        </div>
+        <div class="stage-step" data-step="3">
+          <span class="n">04</span>
+          <h3>Solder, on the joint</h3>
+          <p>The thermal array watches the pad. The moment its trace shows the melt signature, the feeder advances a metered length of wire — then retracts 2–3 mm to break the bridge.</p>
+        </div>
+      </div>
+
+      <div class="stage-progress" aria-hidden="true">
+        <i class="on"></i><i></i><i></i><i></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="border-top:1px solid var(--divider)">
+    <div class="wrap two-col">
+      <div>
+        <p class="eyebrow" data-rv style="margin-bottom:14px">The problem</p>
+        <h2 class="headline" data-rv style="margin-bottom:24px">Soldering needs three hands. You have two.</h2>
+      </div>
+      <div class="prose" data-rv>
+        <p class="lede">One hand holds the iron. One holds the board. The solder gets whatever's left.</p>
+        <p>The technique every tutorial teaches — iron heats the joint from one side, solder feeds into the joint from the opposite side — is exactly the part that gets sacrificed. Solder fed onto the tip instead of the joint loses its flux before it reaches the work, and you get the cold, grainy joint.</p>
+        <p>Helping-hands clamps and manual solder feeders exist, but they're static and human-triggered: you position them once and work around them, then press a pedal. For someone with the use of one arm, those workarounds collapse entirely. Ferros moves to you instead, and decides when to feed on its own.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="wrap two-col">
+      <div>
+        <p class="eyebrow" data-rv style="margin-bottom:14px">The hard part</p>
+        <h2 class="headline" data-rv style="margin-bottom:24px">Molten solder lies to a thermal camera.</h2>
+      </div>
+      <div class="prose" data-rv>
+        <p>Infrared thermometry measures radiance and infers temperature from an assumed emissivity. Board material sits near 0.9 — easy. But the instant solder melts it becomes a shiny specular metal, and its emissivity collapses toward 0.05–0.15. The apparent temperature <em>dips</em> at the exact moment the real temperature is rising.</p>
+        <p>So a naive threshold — "feed at 190 °C" — mistimes every joint. The fix is to treat that artifact as the signal: the detector looks for the latent-heat plateau, the emissivity dip, and the adjacent board pixels rising smoothly past a calibrated band. A taped-on K-type thermocouple provides ground truth to calibrate it against.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow" data-rv style="margin-bottom:14px">Hardware</p>
+      <h2 class="headline" data-rv style="margin-bottom:36px">What's inside.</h2>
+      <div class="spec-grid" data-rv>
+        <div class="cell">
+          <span class="k">Depth</span>
+          <div class="v">Luxonis OAK-D PoE</div>
+          <p class="d">Stereo depth with on-device inference, looking down from the arch apex. Board-frame coordinates come from four fixture AprilTags, recomputed every frame.</p>
+        </div>
+        <div class="cell">
+          <span class="k">Thermal</span>
+          <div class="v">MLX90640, 55° FOV</div>
+          <p class="d">32 × 24 long-wave IR, −40 to 300 °C, 16 Hz. Chosen over the AMG8833, which saturates at 80 °C and cannot see solder temperatures at all.</p>
+        </div>
+        <div class="cell">
+          <span class="k">Actuation</span>
+          <div class="v">6 × Feetech STS3215</div>
+          <p class="d">30 kg·cm serial-bus servos with 4096-count magnetic encoders, daisy-chained on one wire and one 12 V rail.</p>
+        </div>
+        <div class="cell">
+          <span class="k">Feeder</span>
+          <div class="v">Pancake NEMA17</div>
+          <p class="d">A silicone-faced drive wheel against a sprung idler — compliant grip instead of a knurled gear, so soft flux-cored wire isn't crushed.</p>
+        </div>
+        <div class="cell">
+          <span class="k">Trigger</span>
+          <div class="v">27 mm piezo disc</div>
+          <p class="d">Sandwiched under the fixture plate. Two impulses 80–500 ms apart, gated on the camera seeing the tip near the board.</p>
+        </div>
+        <div class="cell">
+          <span class="k">Structure</span>
+          <div class="v">PETG-CF joints</div>
+          <p class="d">Carbon-filled PETG at the shoulder carriage, rack, and brackets; standard PETG for the links. Everything printed and revised in CAD.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="wrap">
+      <figure data-rv style="margin-bottom:20px">
+        <div class="ph r16x9">
+          <img src="../images/ferros-hero.jpg" alt="Project Ferros arm and sensor arch on the workbench" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+          <span class="ph-label">images/ferros-hero.jpg<br>2400 × 1350 px &middot; 16:9</span>
+        </div>
+        <figcaption>Fig. 01 — Assembled arm under the sensor arch</figcaption>
+      </figure>
+      <div class="gallery-2" data-rv>
+        <figure>
+          <div class="ph r4x3">
+            <img src="../images/ferros-head.jpg" alt="Solder feeder head and nozzle detail" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+            <span class="ph-label">images/ferros-head.jpg<br>1600 × 1200 px &middot; 4:3</span>
+          </div>
+          <figcaption>Fig. 02 — Feeder head and blunt-needle nozzle</figcaption>
+        </figure>
+        <figure>
+          <div class="ph r4x3">
+            <img src="../images/ferros-pcb.jpg" alt="Custom carrier PCB for Ferros" loading="lazy" onerror="this.parentElement.classList.add('missing')">
+            <span class="ph-label">images/ferros-pcb.jpg<br>1600 × 1200 px &middot; 4:3</span>
+          </div>
+          <figcaption>Fig. 03 — Carrier board: buck, driver, piezo conditioning</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0;border-top:1px solid var(--divider)">
+    <div class="wrap">
+      <p class="eyebrow" data-rv style="margin-bottom:14px">The build</p>
+      <h2 class="headline" data-rv style="margin-bottom:14px">Every part, under $300.</h2>
+      <p class="sub" data-rv style="margin-bottom:44px;max-width:58ch">
+        The whole point is that this is reproducible. Sourced from the Huaqiangbei markets in
+        Shenzhen, with a walk-away price on every line so the budget survives contact with a stall.
+      </p>
+
+      <div class="budget" data-rv>
+        <div class="card">
+          <span class="k">Budget cap</span>
+          <div class="v">$300</div>
+          <p class="d">Excludes tools and compute already on the bench.</p>
+        </div>
+        <div class="card total">
+          <span class="k">Parts total</span>
+          <div class="v">~$232</div>
+          <p class="d">Roughly $68 of headroom held for spares and a backup thermal module.</p>
+        </div>
+        <div class="card">
+          <span class="k">Encoded axes</span>
+          <div class="v">6</div>
+          <p class="d">Every joint holds position on its own, on a single serial bus.</p>
+        </div>
+      </div>
+
+      <div class="bom-scroll" data-rv>
+        <table class="bom">
+          <thead>
+            <tr><th>Part</th><th>Spec</th><th class="qty">Qty</th><th>Cost</th></tr>
+          </thead>
+          <tbody>
+            <tr class="group"><td colspan="4">Motion — encoder servo arm</td></tr>
+            <tr><td class="item">Feetech STS3215, 12 V</td><td class="spec">30 kg·cm, 4096-count magnetic encoder, serial bus — all six axes</td><td class="qty">6</td><td>$70.85</td></tr>
+            <tr><td class="item">STS3215 spare</td><td class="spec">Identical part, interchangeable with any axis</td><td class="qty">1</td><td>$11.80</td></tr>
+            <tr><td class="item">TTL half-duplex adapter</td><td class="spec">Feather S2 UART to the Feetech single-wire bus</td><td class="qty">1</td><td>$1.40</td></tr>
+            <tr><td class="item">Pinion gear, metal</td><td class="spec">5 mm bore, meshes the printed shoulder-pitch arc rack</td><td class="qty">1</td><td>$1.10</td></tr>
+            <tr><td class="item">Turntable bearing</td><td class="spec">Steel, 80–120 mm, load-rated for base yaw</td><td class="qty">1</td><td>$3.90</td></tr>
+            <tr><td class="item">F625ZZ flanged bearing</td><td class="spec">5 mm bore — arc-rail carriage rollers</td><td class="qty">6</td><td>$1.65</td></tr>
+            <tr><td class="item">625ZZ / 688ZZ bearing</td><td class="spec">Elbow and wrist hinge shaft support</td><td class="qty">8</td><td>$4.45</td></tr>
+            <tr><td class="item">Steel shaft rod</td><td class="spec">5 mm and 8 mm diameter, cut to length</td><td class="qty">1 lot</td><td>$4.85</td></tr>
+            <tr><td class="item">Fastener assortment</td><td class="spec">M3 / M4 / M5 bolts, nuts, washers, standoffs</td><td class="qty">1</td><td>$4.45</td></tr>
+            <tr><td class="item">Threadlocker</td><td class="spec">Blue, medium strength</td><td class="qty">1</td><td>$1.10</td></tr>
+            <tr class="sum"><td colspan="3">Subtotal</td><td>$105.60</td></tr>
+
+            <tr class="group"><td colspan="4">Solder feed — cassette feeder</td></tr>
+            <tr><td class="item">Pancake NEMA17</td><td class="spec">20–25 mm body — kept as a stepper for step-counted linear metering</td><td class="qty">1</td><td>$2.20</td></tr>
+            <tr><td class="item">TMC2209 driver</td><td class="spec">UART, 2 A, silent — StallGuard doubles as jam detection</td><td class="qty">1</td><td>$1.95</td></tr>
+            <tr><td class="item">Shaft coupler / hub</td><td class="spec">5 mm bore, set-screw — mounts the printed drive wheel</td><td class="qty">1</td><td>$1.40</td></tr>
+            <tr><td class="item">Silicone O-rings</td><td class="spec">Stretched over the drive and idler wheels as a soft grip surface</td><td class="qty">1 pack</td><td>$1.40</td></tr>
+            <tr><td class="item">Compression spring</td><td class="spec">Light rate, 10–15 mm — idler tensioner</td><td class="qty">1</td><td>$0.70</td></tr>
+            <tr><td class="item">625ZZ bearing</td><td class="spec">Idler and drive-wheel support</td><td class="qty">2</td><td>$1.10</td></tr>
+            <tr><td class="item">PTFE guide tube</td><td class="spec">1.0–1.2 mm ID — tight fit is what stops the wire buckling</td><td class="qty">2 m</td><td>$1.40</td></tr>
+            <tr><td class="item">Blunt needle kit</td><td class="spec">Stainless 14–18 ga, Luer-lock — the last 25 mm of the path</td><td class="qty">1 kit</td><td>$2.50</td></tr>
+            <tr><td class="item">608ZZ bearing</td><td class="spec">8 mm bore — spool spins free in the quick-load bay</td><td class="qty">2</td><td>$0.55</td></tr>
+            <tr class="sum"><td colspan="3">Subtotal</td><td>$13.20</td></tr>
+
+            <tr class="group"><td colspan="4">Perception &amp; trigger</td></tr>
+            <tr><td class="item">MLX90640 breakout</td><td class="spec">55° FOV, 32 × 24, −40 to 300 °C, 16 Hz — verified module, not a parts-bin clone</td><td class="qty">1</td><td>$29.20</td></tr>
+            <tr><td class="item">Piezo disc</td><td class="spec">27 mm — tap trigger under the fixture plate</td><td class="qty">3</td><td>$0.20</td></tr>
+            <tr><td class="item">K-type + MAX31855</td><td class="spec">Thermocouple ground truth for the melt-signature calibration</td><td class="qty">1</td><td>$4.20</td></tr>
+            <tr><td class="item">AprilTag sheet</td><td class="spec">36h11 family — fixture plate and end effector</td><td class="qty">1</td><td>$1.10</td></tr>
+            <tr class="sum"><td colspan="3">Subtotal</td><td>$34.70</td></tr>
+
+            <tr class="group"><td colspan="4">Electronics &amp; power</td></tr>
+            <tr><td class="item">12 V 5 A supply</td><td class="spec">Servo bus draws 1.5–2.5 A realistic, ~4 A worst-case transient</td><td class="qty">1</td><td>$3.90</td></tr>
+            <tr><td class="item">Buck converter</td><td class="spec">12 V to 5 V, 3 A — logic rail</td><td class="qty">1</td><td>$0.70</td></tr>
+            <tr><td class="item">E-stop, NC mushroom</td><td class="spec">22 mm panel mount — breaks the 12 V rail in hardware, not in software</td><td class="qty">1</td><td>$1.40</td></tr>
+            <tr><td class="item">Wire and shielded pair</td><td class="spec">Servo bus, piezo run, power — the iron is the loudest noise source on the bench</td><td class="qty">1 kit</td><td>$3.05</td></tr>
+            <tr><td class="item">Perfboard</td><td class="spec">Hand-soldered carrier circuit</td><td class="qty">2</td><td>$1.10</td></tr>
+            <tr class="sum"><td colspan="3">Subtotal</td><td>$10.15</td></tr>
+
+            <tr class="group"><td colspan="4">Filament, fixture &amp; consumables</td></tr>
+            <tr><td class="item">Bambu PETG-CF</td><td class="spec">1 kg spool — ~430 g into the joints, carriage, rack, and brackets</td><td class="qty">1</td><td>$32.00</td></tr>
+            <tr><td class="item">Bambu PETG</td><td class="spec">1 kg spool — links and non-load-bearing brackets</td><td class="qty">1</td><td>$22.00</td></tr>
+            <tr><td class="item">Fume extraction</td><td class="spec">120 mm 12 V fan and carbon pad — interlocked, no extraction means no feed</td><td class="qty">1</td><td>$2.75</td></tr>
+            <tr><td class="item">Solder wire, SAC305</td><td class="spec">0.8 mm (~100 g) and 0.6 mm (~50 g), lead-free by choice</td><td class="qty">2</td><td>$3.90</td></tr>
+            <tr><td class="item">Flux pen, brass wool</td><td class="spec">Brass wool, not a wet sponge</td><td class="qty">1 ea</td><td>$2.10</td></tr>
+            <tr><td class="item">Mat, ties, sleeving</td><td class="spec">ESD-safe silicone mat, zip ties, heatshrink</td><td class="qty">1 lot</td><td>$5.15</td></tr>
+            <tr class="sum"><td colspan="3">Subtotal</td><td>$67.90</td></tr>
+
+            <tr class="sum" style="border-top:1px solid var(--ink-3)"><td colspan="3" style="font-size:15px;color:var(--ink)">Total against a $300 cap</td><td style="font-size:17px">~$232</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="bom-note" data-rv>
+        Prices are goal figures at roughly 7.2 RMB to the dollar; each line also carries a walk-away
+        maximum, and the first quote at a stall routinely runs 30–80% high. Filament is ordered
+        online rather than bought at a stall.
+      </p>
+
+      <p class="eyebrow" data-rv style="margin-top:44px;margin-bottom:0">Already on the bench — not in the budget</p>
+      <div class="owned" data-rv>
+        <span>Raspberry Pi 5</span>
+        <span>OAK-D PoE + injector</span>
+        <span>Feather S2</span>
+        <span>3D printer</span>
+        <span>Soldering station</span>
+        <span>Hand tools</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow" data-rv style="margin-bottom:14px">Where it stands</p>
+      <h2 class="headline" data-rv style="margin-bottom:30px">Build log.</h2>
+      <ul class="timeline" data-rv>
+        <li>
+          <span class="t">DONE</span>
+          <div class="c"><h4>Engineering package</h4><p>An 18-page write-up covering architecture, the sensor trade study, feed mechanics, safety and risk analysis, a phased build plan with exit criteria, and a test plan built for ARKSEF.</p></div>
+        </li>
+        <li>
+          <span class="t">DONE</span>
+          <div class="c"><h4>Sourcing and BOM</h4><p>Full parts list costed against a $300 cap, with a per-line walk-away price and a market-by-market sourcing map.</p></div>
+        </li>
+        <li>
+          <span class="t">PHASE 1 · NEXT</span>
+          <div class="c"><h4>Feeder bench prototype</h4><p>Characterise commanded versus actual feed length, slip against idler tension, and jam modes. Exit criterion: ±0.5 mm over a 10 mm feed, 50 consecutive cycles jam-free.</p></div>
+        </li>
+        <li>
+          <span class="t">PHASE 2</span>
+          <div class="c"><h4>Melt detection</h4><p>The emissivity study across SAC305 and Sn63, against thermocouple ground truth. Exit criterion: fire within ±0.4 s of confirmed liquidus on at least 18 of 20 trials, with zero false fires on 20 heat-without-melt trials.</p></div>
+        </li>
+        <li>
+          <span class="t">PHASE 4</span>
+          <div class="c"><h4>Ferros Zero</h4><p>The full sensing chain with the nozzle positioned by hand — tap designates, thermal gates, feeder feeds and retracts. Deliberately a complete result on its own, so nothing downstream is load-bearing on the arm being finished.</p></div>
+        </li>
+        <li>
+          <span class="t">FERROS 2</span>
+          <div class="c"><h4>Roadmap</h4><p>A second arm carrying the iron itself, turning the bench into a fully automated point-soldering cell at roughly a third the price of the cheapest machine that removes the human trigger.</p></div>
+        </li>
+      </ul>
+      <p class="dev-note" data-rv style="margin-top:34px">
+        Ferros is in the planning-to-build transition. Photos, source, and measured results go up here as each phase lands.
+      </p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <nav class="project-nav">
+      <a class="back-link" href="../index.html#work">
+        <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1l5 5-5 5"/></svg>
+        All work
+      </a>
+      <a class="link-more" href="arksef.html">Drone frame impact study <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1l5 5-5 5"/></svg></a>
+    </nav>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-top">
+        <span>© 2026 Lawrence Lei-Ramirez</span>
+        <div class="foot-links">
+          <a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="../index.html#contact">Contact</a>
+        </div>
+      </div>
+      <div class="foot-console">
+        <button class="console-btn" id="gridBtn" aria-pressed="false">GRID</button>
+        <button class="console-btn" id="benchBtn" aria-pressed="false">BENCH LIGHT</button>
+        <span class="clock-chip" id="clock">LIT 00:00:00</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<div class="grid-ol" aria-hidden="true"></div>
+<div id="bench-light" aria-hidden="true"></div>
+
+<script src="../script.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stage = document.querySelector('.stage');
+  if(!stage) return;
+
+  var shoulder  = document.getElementById('shoulder');
+  var elbow     = document.getElementById('elbow');
+  var wrist     = document.getElementById('wrist');
+  var vision    = document.getElementById('vision');
+  var thermcone = document.getElementById('thermcone');
+  var rgbcones  = document.getElementById('rgbcones');
+  var thermal   = document.getElementById('thermal');
+  var bead      = document.getElementById('bead');
+  var camLed    = document.getElementById('cam-led');
+  var target    = document.getElementById('joint-target');
+  var ring1     = document.getElementById('ring1');
+  var ring2     = document.getElementById('ring2');
+  var steps     = Array.prototype.slice.call(document.querySelectorAll('.stage-step'));
+  var pips      = Array.prototype.slice.call(document.querySelectorAll('.stage-progress i'));
+
+  var P_SH = [200, 392], P_EL = [200, 252], P_WR = [200, 152];
+
+  var KF = [
+    [-10, 25, -15, 0.00, 0.00, 0.00, 0.00, 0, 0.25, 0.00],
+    [ 15, 35,  10, 1.00, 0.00, 0.00, 0.00, 0, 1.00, 1.00],
+    [ 40, 60,  45, 0.60, 0.00, 0.00, 1.00, 0, 1.00, 0.55],
+    [ 52, 68,  55, 0.30, 0.90, 0.34, 0.00, 6, 1.00, 0.30]
+  ];
+
+  function lerp(a,b,t){ return a + (b-a)*t; }
+  function ease(t){ return t<0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+
+  function rot(el, deg, p){
+    el.setAttribute('transform','rotate(' + deg.toFixed(2) + ',' + p[0] + ',' + p[1] + ')');
+  }
+
+  function apply(p){
+    var seg = p * (KF.length - 1);
+    var i = Math.min(KF.length - 2, Math.floor(seg));
+    var t = ease(Math.min(1, Math.max(0, seg - i)));
+    var a = KF[i], b = KF[i+1];
+
+    rot(shoulder, lerp(a[0],b[0],t), P_SH);
+    rot(elbow,    lerp(a[1],b[1],t), P_EL);
+    rot(wrist,    lerp(a[2],b[2],t), P_WR);
+
+    vision.setAttribute('opacity',    lerp(a[3],b[3],t).toFixed(3));
+    thermcone.setAttribute('opacity', lerp(a[4],b[4],t).toFixed(3));
+    rgbcones.setAttribute('opacity',  lerp(a[9],b[9],t).toFixed(3));
+    thermal.setAttribute('opacity',   lerp(a[5],b[5],t).toFixed(3));
+    bead.setAttribute('r',            lerp(a[7],b[7],t).toFixed(2));
+    camLed.setAttribute('opacity',    lerp(a[8],b[8],t).toFixed(3));
+
+    var k = lerp(a[6],b[6],t);
+    ring1.setAttribute('r', (9 + k * 13).toFixed(1));
+    ring1.setAttribute('opacity', k.toFixed(3));
+    ring2.setAttribute('r', (9 + k * 27).toFixed(1));
+    ring2.setAttribute('opacity', (k * 0.45).toFixed(3));
+
+    target.setAttribute('fill', p > 0.55 ? 'var(--accent)' : 'var(--ink-3)');
+
+    var active = Math.round(seg);
+    steps.forEach(function(s,ix){ s.classList.toggle('on', ix === active); });
+    pips.forEach(function(s,ix){ s.classList.toggle('on', ix === active); });
+  }
+
+  if(reduce){
+    apply(1);
+    steps.forEach(function(s){ s.classList.add('on'); });
+    stage.style.height = 'auto';
+    document.querySelector('.stage-pin').style.position = 'static';
+    return;
+  }
+
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var r = stage.getBoundingClientRect();
+      var total = r.height - window.innerHeight;
+      var p = total > 0 ? (-r.top) / total : 0;
+      apply(Math.min(1, Math.max(0, p)));
+      ticking = false;
+    });
+  }
+  apply(0);
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+})();
+</script>
+</body>
+</html>
