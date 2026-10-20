@@ -987,8 +987,14 @@ figcaption{
 /* ---------- 21. SIGNATURE ---------- */
 
 .sig-block{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:40px}
-.sig{width:min(250px,62vw);opacity:.92;transform:rotate(-2deg)}
-html[data-theme="dark"] .sig{filter:invert(1) brightness(1.7)}
+/* The signature always sits on the cocoa contact band, so it is white in
+   both themes. brightness(0) flattens whatever ink colour the PNG holds to
+   black, then invert(1) lifts it to pure white — alpha is untouched, so this
+   works regardless of how the file was exported. */
+.sig{
+  width:min(250px,62vw);opacity:.92;transform:rotate(-2deg);
+  filter:brightness(0) invert(1);
+}
 .sig-missing{
   width:min(250px,62vw);height:82px;border-radius:var(--wobble-3);
   display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--ink-3);
