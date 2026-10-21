@@ -986,7 +986,10 @@ figcaption{
 
 /* ---------- 21. SIGNATURE ---------- */
 
-.sig-block{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:40px}
+.sig-block{
+  display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:40px;
+  -webkit-user-select:none;user-select:none;
+}
 /* The signature always sits on the cocoa contact band, so it is white in
    both themes. brightness(0) flattens whatever ink colour the PNG holds to
    black, then invert(1) lifts it to pure white — alpha is untouched, so this
@@ -1073,6 +1076,174 @@ html.grid-on .grid-ol{opacity:1}
 }
 html.bench-on #bench-light{opacity:1}
 
+/* ---------- 24B. BENCH TV (hidden — dbl-click the signature) ---------- */
+
+html.tv-lock,html.tv-lock body{overflow:hidden}
+
+.tv-ol{
+  position:fixed;inset:0;z-index:250;
+  display:grid;place-items:center;padding:22px;
+  background:color-mix(in srgb,var(--cocoa-deep) 84%,transparent);
+  backdrop-filter:blur(7px) saturate(.9);
+  -webkit-backdrop-filter:blur(7px) saturate(.9);
+  opacity:0;transition:opacity .26s var(--ease-soft);
+}
+.tv-ol.open{opacity:1}
+.tv-ol[hidden]{display:none}
+
+.tv-panel{
+  width:min(920px,100%);max-height:min(88vh,880px);
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--card);
+  border:2.5px solid var(--ink);border-radius:var(--wobble-3);
+  box-shadow:var(--shadow-hard-lg);
+  transform:translateY(16px) rotate(-.4deg);
+  transition:transform .34s var(--ease-back);
+}
+.tv-ol.open .tv-panel{transform:none}
+
+.tv-head{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 15px;background:var(--paper-2);
+  border-bottom:2.5px solid var(--ink);
+}
+.tv-title{
+  font-family:var(--display);font-variation-settings:"wght" 700,"wdth" 90;
+  font-size:15px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);
+}
+.tv-chip{
+  margin-left:auto;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);background:var(--card);
+  border:2px solid var(--ink);border-radius:var(--wobble-3);
+  padding:6px 10px;box-shadow:2px 2px 0 var(--ink);
+  transition:transform .2s var(--ease-back),background .2s;
+}
+.tv-chip:hover{background:var(--amber);transform:translate(-1px,-1px)}
+.tv-x{
+  width:31px;height:31px;display:grid;place-items:center;flex:0 0 auto;
+  color:var(--ink);background:var(--card);
+  border:2px solid var(--ink);border-radius:50%;
+  box-shadow:2px 2px 0 var(--ink);
+  transition:transform .2s var(--ease-back),background .2s,color .2s;
+}
+.tv-x:hover{background:var(--orange);color:#fffaf0;transform:translate(-1px,-1px)}
+.tv-x svg{width:12px;height:12px}
+
+/* The stage keeps 16:9 whether it holds the iframe or the idle card,
+   so opening a video never jumps the panel's height. */
+.tv-stage{
+  position:relative;aspect-ratio:16/9;flex:0 0 auto;
+  /* Capped so the results list always keeps a usable strip underneath;
+     the player letterboxes itself inside whatever box it is given. */
+  max-height:min(48vh,440px);
+  background:var(--cocoa-deep);border-bottom:2.5px solid var(--ink);
+}
+.tv-stage iframe,.tv-stage video{
+  position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
+}
+.tv-stage video{background:#000;object-fit:contain}
+.tv-idle{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;padding:20px;text-align:center;
+  background-image:repeating-linear-gradient(135deg,
+    transparent 0 12px,rgba(255,250,240,.05) 12px 13px);
+}
+.tv-idle-k{
+  font-family:var(--mono);font-size:10px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--amber);
+}
+/* The stage is cocoa in both themes, so this text is pinned light the
+   same way the signature is — a flipping token would vanish in dark. */
+.tv-idle p{font-family:var(--hand);font-size:23px;color:#efe4d2;transform:rotate(-1.2deg)}
+.tv-act{
+  margin-top:6px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  /* amber and lime stay light in both themes, so the label is pinned
+     dark — var(--ink) would go cream in dark mode and disappear. */
+  color:#16120e;background:var(--amber);
+  border:2px solid var(--ink);border-radius:var(--wobble-3);
+  padding:7px 13px;box-shadow:2px 2px 0 var(--ink);
+  transition:transform .2s var(--ease-back),background .2s;
+}
+.tv-act:hover{background:var(--lime);transform:translate(-1px,-1px)}
+
+.tv-bar{display:flex;gap:10px;padding:14px 15px 9px}
+.tv-in{
+  flex:1;min-width:0;font:inherit;font-size:14px;color:var(--ink);
+  background:var(--paper);
+  border:2.5px solid var(--ink);border-radius:var(--wobble-3);
+  padding:11px 14px;-webkit-appearance:none;appearance:none;
+}
+.tv-in::placeholder{color:var(--ink-3)}
+.tv-in:focus{
+  outline:none;border-color:var(--orange);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--orange) 26%,transparent);
+}
+.tv-go{
+  font-family:var(--display);font-variation-settings:"wght" 700,"wdth" 90;
+  font-size:13px;letter-spacing:.07em;text-transform:uppercase;
+  padding:11px 20px;color:#fffaf0;background:var(--orange);
+  border:2.5px solid var(--ink);border-radius:var(--wobble-3);
+  box-shadow:3px 3px 0 var(--ink);
+  transition:transform .2s var(--ease-back),box-shadow .2s var(--ease-back);
+}
+.tv-go:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+.tv-go:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+
+.tv-note{
+  padding:0 15px 9px;min-height:13px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+
+.tv-list{
+  flex:1;min-height:0;overflow-y:auto;
+  padding:0 9px 12px;display:flex;flex-direction:column;gap:2px;
+}
+.tv-row{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  padding:8px;border:2px solid transparent;border-radius:var(--wobble-3);
+  transition:background .18s,border-color .18s,transform .18s var(--ease-back);
+}
+.tv-row:hover{background:var(--paper-2);border-color:var(--ink);transform:translateX(2px)}
+.tv-thumb{
+  position:relative;flex:0 0 auto;width:124px;aspect-ratio:16/9;overflow:hidden;
+  border:2px solid var(--ink);border-radius:9px;
+  background:repeating-linear-gradient(135deg,transparent 0 9px,var(--paper-3) 9px 10px);
+}
+.tv-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.tv-dur{
+  position:absolute;right:3px;bottom:3px;padding:2px 4px;border-radius:4px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.05em;
+  background:rgba(22,18,14,.84);color:#fffaf0;
+}
+.tv-meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tv-h{
+  font-weight:600;font-size:14px;line-height:1.32;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.tv-sub{
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* Laptop-height windows: give the stage less so results stay visible. */
+@media (max-height:720px){
+  .tv-stage{max-height:40vh}
+}
+
+@media (max-width:640px){
+  .tv-ol{padding:9px}
+  /* Too little height left for a nested scroller, so the whole panel scrolls. */
+  .tv-panel{max-height:94vh;overflow-y:auto}
+  .tv-list{overflow:visible}
+  .tv-thumb{width:94px}
+  .tv-go{padding:11px 14px}
+  .tv-idle p{font-size:19px}
+}
+
 /* ---------- 25. REDUCED MOTION ---------- */
 
 @media (prefers-reduced-motion:reduce){
@@ -1090,7 +1261,7 @@ html.bench-on #bench-light{opacity:1}
 /* ---------- 26. PRINT ---------- */
 
 @media print{
-  .nav,.grain,.grid-ol,#bench-light,.ticker,.doodle,.foot-console{display:none!important}
+  .nav,.grain,.grid-ol,#bench-light,.ticker,.doodle,.foot-console,.tv-ol{display:none!important}
   body{background:#fff;color:#000}
   [data-rv],[data-stagger] > *{opacity:1!important;transform:none!important}
   .sticker,.tile,.ph{box-shadow:none;transform:none!important}
