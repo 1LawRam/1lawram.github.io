@@ -33,6 +33,8 @@
   'use strict';
 
   var TIMEOUT = 9000;
+  var FRAME_WAIT = 6000;   /* an embed that has not loaded by now is suspect */
+  var PROBE_WAIT = 2600;
   var STORE = 'llr-tv-mirror';
 
   /* ---------- playback ---------- */
@@ -42,8 +44,13 @@
       label: 'yt-nocookie',
       kind: 'frame',
       embed: function (id) {
+        /* enablejsapi lets the player postMessage its own errors back,
+           which is the only way to hear about a video whose owner has
+           turned embedding off — that frame loads perfectly and then
+           shows "Video unavailable". */
         return 'https://www.youtube-nocookie.com/embed/' + id +
-               '?autoplay=1&rel=0&modestbranding=1';
+               '?autoplay=1&rel=0&modestbranding=1&enablejsapi=1' +
+               '&origin=' + encodeURIComponent(location.origin);
       }
     },
     { label: 'proxy', kind: 'stream' }
@@ -197,8 +204,9 @@
 
   var ui = null;
   var mirror = 0;
-  var chosen = false;   /* viewer picked a mirror — never override it */
+  var chosen = false;   /* viewer picked a route themselves */
   var probed = false;
+  var ytOK = null;      /* null = not yet tested */
   var current = null;
   var lastFocus = null;
   var hideTimer = 0;
@@ -264,6 +272,19 @@
     idle();
     syncMirror();
 
+    /* Scoped to the frame currently on the stage, so it needs no
+       teardown when the video changes. */
+    window.addEventListener('message', function (e) {
+      var f = ui && ui.stage.querySelector('iframe');
+      if (!f || e.source !== f.contentWindow) return;
+      var d = e.data;
+      if (typeof d === 'string') {
+        try { d = JSON.parse(d); } catch (err) { return; }
+      }
+      if (!d || d.event !== 'onError') return;
+      if (current) failOver(current.id, 'That one refuses to embed');
+    });
+
     close.addEventListener('click', hide);
     ol.addEventListener('mousedown', function (e) { if (e.target === ol) hide(); });
     mBtn.addEventListener('click', function () {
@@ -303,29 +324,79 @@
     if (current) play(current.id, current.title);
   }
 
-  function otherRoute() {
-    return mirror === 0 ? 1 : 0;
-  }
 
   function idle() {
     card('Side channel', 'Search, or paste any YouTube link.');
   }
 
   function play(id, title) {
-    current = { id: id, title: title };
+    current = { id: id, title: title, tried: [] };
     ui.panel.scrollTop = 0;
-    if (MIRRORS[mirror].kind === 'stream') playStream(id, title);
-    else playFrame(id, title);
+    route(mirror);
+  }
+
+  function route(r) {
+    if (!current) return;
+    current.tried.push(r);
+    /* The chip names whatever is actually playing, not what was asked
+       for, so a fallback never lies about where the video came from. */
+    mirror = r;
+    syncMirror();
+    if (MIRRORS[r].kind === 'stream') playStream(current.id, current.title);
+    else playFrame(current.id, current.title);
+  }
+
+  /* Hand the video to a route that has not been tried yet. The viewer's
+     stored preference is deliberately left alone: a fallback is this
+     network's problem, not a change of mind. */
+  function failOver(id, why) {
+    if (!current || current.id !== id) return;
+    var next = -1;
+    for (var i = 0; i < MIRRORS.length; i++) {
+      if (current.tried.indexOf(i) === -1) { next = i; break; }
+    }
+    if (next === -1) {
+      card('Nothing doing', 'Both routes failed on that one.',
+           'Try again', function () { play(id, current && current.title); });
+      return;
+    }
+    ui.note.textContent = why + ' \u2014 switching to ' + MIRRORS[next].label + '\u2026';
+    route(next);
   }
 
   function playFrame(id, title) {
     ui.stage.innerHTML = '';
     var f = document.createElement('iframe');
-    f.src = MIRRORS[mirror].embed(id);
+    f.src = MIRRORS[0].embed(id);
     f.title = title || 'Video';
     f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
     f.setAttribute('allowfullscreen', '');
     f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+
+    /* A cross-origin frame will not tell us it failed, so the embed is
+       judged by a separate probe: either it never finished loading, or
+       it "loaded" something that is really a filter's block page. The
+       probe settles both, and a slow-but-working network is left alone
+       because the probe comes back fine. */
+    var checked = false;
+    var check = function () {
+      if (checked) return;
+      checked = true;
+      reachable(function (ok) {
+        if (!ok) failOver(id, 'YouTube looks blocked here');
+      });
+    };
+    f.addEventListener('load', function () {
+      check();
+      /* the player stays silent until something asks it to report */
+      try {
+        f.contentWindow.postMessage(JSON.stringify({
+          event: 'listening', id: 'benchtv', channel: 'widget'
+        }), '*');
+      } catch (e) {}
+    });
+    setTimeout(check, FRAME_WAIT);
+
     ui.stage.appendChild(f);
   }
 
@@ -352,11 +423,8 @@
     function attempt() {
       if (i >= STREAM_APIS.length) {
         /* Public instances get throttled by YouTube in waves, so this
-           is a normal Tuesday rather than a bug. Hand over a button
-           instead of telling them to go hunting for the chip. */
-        card('No route',
-             'Every proxy mirror refused that one — they get throttled by YouTube in waves.',
-             'Try YouTube’s own player', function () { useMirror(0); });
+           is a normal Tuesday rather than a bug. */
+        failOver(id, 'Every proxy mirror refused that');
         return;
       }
       var host = STREAM_APIS[i++];
@@ -365,7 +433,7 @@
         if (!current || current.id !== id) return;
         var url = pickStream(d);
         if (!url) { attempt(); return; }
-        mount(url, (d && d.title) || title);
+        mount(url, (d && d.title) || title, id);
       }, function () {
         if (current && current.id === id) attempt();
       });
@@ -373,7 +441,7 @@
     attempt();
   }
 
-  function mount(url, title) {
+  function mount(url, title, id) {
     ui.stage.innerHTML = '';
     var v = document.createElement('video');
     v.src = url;
@@ -382,8 +450,7 @@
     v.setAttribute('playsinline', '');
     v.setAttribute('title', title || 'Video');
     v.addEventListener('error', function () {
-      card('Dropped', 'That stream died on the way over.',
-           'Try YouTube’s own player', function () { useMirror(otherRoute()); });
+      failOver(id, 'That stream died on the way over');
     });
     ui.stage.appendChild(v);
     var p = v.play();
@@ -465,27 +532,40 @@
 
   /* ---------- is YouTube even reachable from here? ---------- */
 
+  /* An image rather than a fetch, because only an image can tell a real
+     YouTube response from a filter's block page: a block page decodes as
+     nothing and lands on onerror, where a no-cors fetch would happily
+     resolve and call it reachable. Answered once, then remembered. */
+  function reachable(cb) {
+    if (ytOK !== null) { cb(ytOK); return; }
+    var img = new Image();
+    var settled = false;
+    var finish = function (v) {
+      if (settled) return;
+      settled = true;
+      ytOK = v;
+      cb(v);
+    };
+    var t = setTimeout(function () { finish(false); }, PROBE_WAIT);
+    img.onload = function () { clearTimeout(t); finish(true); };
+    img.onerror = function () { clearTimeout(t); finish(false); };
+    img.referrerPolicy = 'no-referrer';
+    img.src = ytThumb('dQw4w9WgXcQ') + '?_=' + Date.now();
+  }
+
+  /* Pick the proxy up front when YouTube is unreachable, so the first
+     play does not have to fail before falling back. */
   function probe() {
     if (probed || chosen) return;
     probed = true;
-    var img = new Image();
-    var settled = false;
-    var fail = function () {
-      if (settled) return;
-      settled = true;
-      if (chosen) return;
+    reachable(function (ok) {
+      if (ok || chosen) return;
       mirror = 1;
       syncMirror();
       if (!ui.note.textContent) {
         ui.note.textContent = 'YouTube looks blocked here — routed through the proxy.';
       }
-    };
-    var ok = function () { settled = true; };
-    var t = setTimeout(fail, 2600);
-    img.onload = function () { clearTimeout(t); ok(); };
-    img.onerror = function () { clearTimeout(t); fail(); };
-    img.referrerPolicy = 'no-referrer';
-    img.src = ytThumb('dQw4w9WgXcQ') + '?_=' + Date.now();
+    });
   }
 
   /* ---------- show / hide ---------- */
