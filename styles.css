@@ -903,6 +903,85 @@ figcaption{
 }
 .facts .f-v{text-align:right;font-size:15.5px;color:var(--ink)}
 
+/* ---------- 18B. MAKERWORLD ---------- */
+
+.mw-totals .stat .v{font-variant-numeric:tabular-nums}
+
+.mw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:52px}
+@media (max-width:900px){ .mw-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:620px){ .mw-grid{grid-template-columns:1fr;gap:36px} }
+
+.mw-card{
+  position:relative;display:flex;flex-direction:column;overflow:hidden;
+  background:var(--card);
+  border:2.5px solid var(--ink);
+  border-radius:var(--wobble-3);
+  box-shadow:var(--shadow-hard);
+  transition:transform .35s var(--ease-back),box-shadow .35s var(--ease-back);
+}
+.mw-card:nth-child(odd){transform:rotate(-1.1deg)}
+.mw-card:nth-child(even){transform:rotate(.9deg)}
+.mw-card:hover{transform:rotate(0deg) translate(-4px,-5px);box-shadow:var(--shadow-hard-lg);z-index:3}
+
+/* the ranking tab, stuck on like a numbered sticker */
+.mw-rank{
+  position:absolute;top:14px;left:14px;z-index:3;
+  font-family:var(--display);font-variation-settings:"wght" 800,"wdth" 80;
+  font-size:17px;line-height:1;letter-spacing:.02em;
+  color:var(--ink);background:var(--amber);
+  border:2.5px solid var(--ink);border-radius:var(--wobble-3);
+  padding:8px 11px 7px;transform:rotate(-4deg);
+  box-shadow:3px 3px 0 var(--ink);
+}
+.mw-card:first-child .mw-rank{background:var(--lime)}
+
+.mw-shot{
+  position:relative;aspect-ratio:4/3;overflow:hidden;
+  border-bottom:2.5px solid var(--ink);
+  background:var(--paper-3);
+}
+.mw-shot img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease-soft)}
+.mw-card:hover .mw-shot img{transform:scale(1.045)}
+/* no cover came back from the CDN — fall back to a labelled blank */
+.mw-shot.no-shot img{display:none}
+.mw-shot.no-shot::after{
+  content:"no cover";position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);
+}
+
+.mw-body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
+.mw-body h3{
+  font-family:var(--display);
+  font-variation-settings:"wght" 760,"wdth" 82;
+  font-size:21px;line-height:1.04;letter-spacing:-.012em;
+  text-transform:uppercase;margin-bottom:18px;
+}
+
+.mw-stats{
+  list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  padding-top:16px;margin-bottom:18px;margin-top:auto;
+  border-top:2px dashed var(--rule);
+}
+.mw-stats .n{
+  display:block;font-family:var(--display);
+  font-variation-settings:"wght" 800,"wdth" 84;
+  font-size:25px;line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;margin-bottom:5px;
+}
+.mw-stats li:first-child .n{color:var(--orange)}
+.mw-stats .l{
+  display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+
+.mw-foot{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.mw-stamp{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);
+}
+
 /* ---------- 19. SCROLL STAGE (Ferros 3D) ---------- */
 
 .stage{position:relative;height:440vh}
@@ -1242,6 +1321,68 @@ html.tv-lock,html.tv-lock body{overflow:hidden}
   .tv-thumb{width:94px}
   .tv-go{padding:11px 14px}
   .tv-idle p{font-size:19px}
+}
+
+/* ---------- 24C. INTRO CURTAIN (signature) ---------- */
+
+/* The curtain is a fixed black panel; the signature inside is the real
+   signature.png, shown through two stacked masks — one that keeps only the
+   ink, one that is a fat stroke travelling along the pen's own path. */
+
+html.intro-lock, html.intro-lock body{overflow:hidden}
+
+.intro{
+  position:fixed;inset:0;z-index:400;
+  display:grid;place-items:center;
+  background:#0c0a08;
+  transform:translateY(0);
+  will-change:transform;
+}
+/* only present while the gate script says so — otherwise never shown */
+html:not(.intro-on) .intro{display:none}
+
+.intro.lifting{
+  transform:translateY(-101%);
+  transition:transform .72s cubic-bezier(.76,0,.24,1);
+}
+
+.intro-in{
+  width:min(1020px,86vw);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+
+.intro-kicker{
+  font-family:var(--mono);
+  font-size:clamp(10px,1.5vw,13px);
+  letter-spacing:.3em;text-transform:uppercase;
+  color:#8c7f6d;
+  align-self:flex-start;margin-left:4%;
+  opacity:0;transform:translateY(8px);
+}
+.intro.writing .intro-kicker{
+  opacity:1;transform:none;
+  transition:opacity .5s var(--ease-soft),transform .5s var(--ease-soft);
+}
+.intro.wiping .intro-kicker{
+  opacity:0;transform:translateY(-6px);
+  transition:opacity .4s var(--ease-soft),transform .4s var(--ease-soft);
+}
+
+.intro-sig{width:100%;height:auto;overflow:visible}
+
+/* every stroke starts fully retracted; intro.js drives the offsets */
+/* Dash pattern 1-on/3-off over a normalised pathLength of 1: the gap is wide
+   enough that at offset 1.05 (retracted) and -1.05 (erased) no neighbouring
+   dash in the repeating pattern touches the path, so the round caps leave no
+   stray dot at either end. */
+.sig-nib path{
+  stroke-dasharray:1 3;
+  stroke-dashoffset:1.05;
+}
+
+@media (max-width:600px){
+  .intro-in{width:92vw}
+  .intro-kicker{margin-left:2%}
 }
 
 /* ---------- 25. REDUCED MOTION ---------- */

@@ -267,9 +267,17 @@
 
   window.Sketch = { make: makeDoodle, draw: draw, prime: prime, doodles: DOODLES };
 
+  function start() {
+    if (document.documentElement.classList.contains('intro-on')) {
+      document.addEventListener('llr:intro-done', init, { once: true });
+    } else {
+      init();
+    }
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', start);
   } else {
-    init();
+    start();
   }
 })();

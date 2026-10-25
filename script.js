@@ -36,7 +36,15 @@
       },
       { threshold: 0.14 }
     );
-    document.querySelectorAll('[data-rv]').forEach(function (el) { io.observe(el); });
+    var observeReveals = function () {
+      document.querySelectorAll('[data-rv]').forEach(function (el) { io.observe(el); });
+    };
+    /* the intro curtain covers the page: let it finish before anything reveals */
+    if (docEl.classList.contains('intro-on')) {
+      document.addEventListener('llr:intro-done', observeReveals, { once: true });
+    } else {
+      observeReveals();
+    }
   } else {
     document.querySelectorAll('[data-rv]').forEach(function (el) { el.classList.add('in'); });
   }
