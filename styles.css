@@ -1077,6 +1077,7 @@ figcaption{
   width:min(250px,62vw);opacity:.92;transform:rotate(-2deg);
   filter:brightness(0) invert(1);
 }
+/* the file is vector now, so it stays crisp however large it is drawn */
 .sig-missing{
   width:min(250px,62vw);height:82px;border-radius:var(--wobble-3);
   display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--ink-3);
@@ -1329,6 +1330,9 @@ html.tv-lock,html.tv-lock body{overflow:hidden}
    the signature, and all three sit inside a single wipe mask — so the eraser
    at the end rubs out the whole screen in one gesture rather than clearing
    the signature and then sliding a panel away.
+   The signature is vector: the pen paths traced from signature.png, stroked
+   at the 6px the real ink measures, so it is sharp at any size and the stroke
+   that draws it IS the artwork — no mask over a bitmap.
    intro.js sets the pixel-space viewBox and the eraser path on resize. */
 
 html.intro-lock, html.intro-lock body{overflow:hidden}
