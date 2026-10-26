@@ -45,10 +45,11 @@
   }
 
   var START = 420;    // let the kicker land first
-  var DRAW  = 1950;
+  var DRAW  = 2100;
   var HOLD  = 420;
   var WIPE  = 1150;
   var PAUSE_SHARE = 0.2;   // of DRAW, spent lifting the pen between strokes
+  var FALLBACK_EASE = 'cubic-bezier(.42,0,.58,1)';
 
   /* ---------- layout: the SVG works in real pixels ---------- */
 
@@ -74,6 +75,9 @@
     return d;
   }
 
+  var vb = (frame.getAttribute('viewBox') || '0 0 1058 647').split(/[\s,]+/).map(Number);
+  var sigAspect = (vb[3] && vb[2]) ? vb[3] / vb[2] : 647 / 1058;
+
   function layout() {
     var w = window.innerWidth, h = window.innerHeight;
 
@@ -84,7 +88,7 @@
     });
 
     var cw = Math.min(1020, w * 0.86);
-    var ch = cw * 377 / 713;
+    var ch = cw * sigAspect;
     var cx = (w - cw) / 2;
     var cy = (h - ch) / 2 + h * 0.015;
 
@@ -123,12 +127,17 @@
     /* pause in proportion to how far the nib has to travel to get here */
     at += (gaps[i] / gapSum) * pauseMs;
     var dur = Math.max((shares[i] / shareSum) * writeMs, 16);
-    anims.push(path.animate(
-      [{ strokeDashoffset: 1.05 }, { strokeDashoffset: 0 }],
-      { delay: at, duration: dur,
-        /* handwriting accelerates out of a stroke and settles into its end */
-        easing: 'cubic-bezier(.42,0,.58,1)', fill: 'both' }
-    ));
+    var frames = [{ strokeDashoffset: 1.05 }, { strokeDashoffset: 0 }];
+    /* --ease is a linear() curve baked per stroke from its own curvature, so
+       the nib slows through tight turns and runs on the long sweeps */
+    var pen = path.style.getPropertyValue('--ease').trim();
+    try {
+      anims.push(path.animate(frames,
+        { delay: at, duration: dur, easing: pen || FALLBACK_EASE, fill: 'both' }));
+    } catch (e) {
+      anims.push(path.animate(frames,
+        { delay: at, duration: dur, easing: FALLBACK_EASE, fill: 'both' }));
+    }
     at += dur;
   });
 
