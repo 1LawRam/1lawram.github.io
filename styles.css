@@ -1325,65 +1325,40 @@ html.tv-lock,html.tv-lock body{overflow:hidden}
 
 /* ---------- 24C. INTRO CURTAIN (signature) ---------- */
 
-/* The curtain is a fixed black panel; the signature inside is the real
-   signature.png, shown through two stacked masks — one that keeps only the
-   ink, one that is a fat stroke travelling along the pen's own path. */
+/* One SVG the size of the viewport. It paints the black sheet, the kicker and
+   the signature, and all three sit inside a single wipe mask — so the eraser
+   at the end rubs out the whole screen in one gesture rather than clearing
+   the signature and then sliding a panel away.
+   intro.js sets the pixel-space viewBox and the eraser path on resize. */
 
 html.intro-lock, html.intro-lock body{overflow:hidden}
 
 .intro{
-  position:fixed;inset:0;z-index:400;
-  display:grid;place-items:center;
-  background:#0c0a08;
-  transform:translateY(0);
-  will-change:transform;
+  position:fixed;inset:0;z-index:400;overflow:hidden;
+  /* failsafe: if intro.js never loads, the curtain still clears itself */
+  animation:intro-bail 0s linear 9s forwards;
 }
-/* only present while the gate script says so — otherwise never shown */
 html:not(.intro-on) .intro{display:none}
+@keyframes intro-bail{to{opacity:0;visibility:hidden;pointer-events:none}}
 
-.intro.lifting{
-  transform:translateY(-101%);
-  transition:transform .72s cubic-bezier(.76,0,.24,1);
-}
-
-.intro-in{
-  width:min(1020px,86vw);
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-}
+.intro-sheet{position:absolute;inset:0;width:100%;height:100%;display:block}
 
 .intro-kicker{
   font-family:var(--mono);
-  font-size:clamp(10px,1.5vw,13px);
-  letter-spacing:.3em;text-transform:uppercase;
-  color:#8c7f6d;
-  align-self:flex-start;margin-left:4%;
-  opacity:0;transform:translateY(8px);
+  font-size:13px;letter-spacing:.3em;text-transform:uppercase;
+  fill:#8c7f6d;opacity:0;
 }
-.intro.writing .intro-kicker{
-  opacity:1;transform:none;
-  transition:opacity .5s var(--ease-soft),transform .5s var(--ease-soft);
-}
-.intro.wiping .intro-kicker{
-  opacity:0;transform:translateY(-6px);
-  transition:opacity .4s var(--ease-soft),transform .4s var(--ease-soft);
-}
+.intro.writing .intro-kicker{opacity:1;transition:opacity .55s var(--ease-soft)}
 
-.intro-sig{width:100%;height:auto;overflow:visible}
-
-/* every stroke starts fully retracted; intro.js drives the offsets */
 /* Dash pattern 1-on/3-off over a normalised pathLength of 1: the gap is wide
-   enough that at offset 1.05 (retracted) and -1.05 (erased) no neighbouring
-   dash in the repeating pattern touches the path, so the round caps leave no
-   stray dot at either end. */
-.sig-nib path{
+   enough that at offset 1.05 (retracted) no neighbouring dash in the
+   repeating pattern touches the path, so the round caps leave no stray dot. */
+.sig-nib path,#wipeRub{
   stroke-dasharray:1 3;
   stroke-dashoffset:1.05;
 }
 
-@media (max-width:600px){
-  .intro-in{width:92vw}
-  .intro-kicker{margin-left:2%}
-}
+@media (max-width:600px){ .intro-kicker{font-size:11px;letter-spacing:.24em} }
 
 /* ---------- 25. REDUCED MOTION ---------- */
 
