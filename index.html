@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Down Due to Legal Process — Lawrence Lei-Ramirez</title>
+<meta name="description" content="This site is down due to legal process. Estimated time of return: mid 2027.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://lawrenceleiramirez.com/">
+
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<meta name="theme-color" content="#f4eee2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16120e" media="(prefers-color-scheme: dark)">
+
+<style>
+@font-face{
+  font-family:"Inter var";
+  src:url("fonts/inter.woff2") format("woff2");
+  font-weight:100 900;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Bricolage var";
+  src:url("fonts/bricolage.woff2") format("woff2");
+  font-weight:200 800;
+  font-stretch:75% 100%;
+  font-display:swap;
+}
+
+:root{
+  --paper:   #f4eee2;
+  --paper-2: #ece4d4;
+  --card:    #fffaf0;
+  --ink:     #16120e;
+  --rule:    #cbbfa9;
+  --orange:  #e4572e;
+  --amber:   #f2b134;
+  --cocoa:   #5c3b37;
+  --blueprint:#2b4c7e;
+  --steel:   #b9b2a4;
+
+  --sans:    "Inter var", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --display: "Bricolage var", "Inter var", Impact, sans-serif;
+  --mono:    "SF Mono", ui-monospace, "IBM Plex Mono", Menlo, Consolas, monospace;
+
+  --wobble: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --shadow-hard-lg: 9px 9px 0 var(--ink);
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+
+html[data-theme="dark"]{
+  --paper:   #16120e;
+  --paper-2: #211b15;
+  --card:    #1d1710;
+  --ink:     #f6f0e4;
+  --rule:    #44382c;
+  --orange:  #ff7a4d;
+  --amber:   #ffc75c;
+  --cocoa:   #7a4f49;
+  --blueprint:#6ea8ff;
+  --steel:   #5d5548;
+}
+@media (prefers-color-scheme: dark){
+  html:not([data-theme="light"]){
+    --paper:   #16120e;
+    --paper-2: #211b15;
+    --card:    #1d1710;
+    --ink:     #f6f0e4;
+    --rule:    #44382c;
+    --orange:  #ff7a4d;
+    --amber:   #ffc75c;
+    --cocoa:   #7a4f49;
+    --blueprint:#6ea8ff;
+    --steel:   #5d5548;
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  min-height:100svh;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  display:flex;
+  flex-direction:column;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(var(--rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  background-size:38px 38px;
+  opacity:.16;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ───────── hazard tape ───────── */
+.tape{
+  position:relative;
+  z-index:4;
+  height:28px;
+  flex:none;
+  background-image:repeating-linear-gradient(
+    -45deg, var(--amber) 0 18px, #16120e 18px 36px);
+  background-size:50.9px 50.9px;
+  border-block:2px solid var(--ink);
+  animation:slide 2.6s linear infinite;
+}
+.tape-bottom{animation-direction:reverse}
+@keyframes slide{to{background-position:50.9px 0}}
+
+main{
+  flex:1;
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding-top:clamp(24px, 5vh, 64px);
+}
+/* soaks up leftover height so the rig always stands on the ground */
+main::before{content:"";flex:1 1 auto}
+
+/* ───────── the sign ───────── */
+.sign{
+  position:relative;
+  z-index:3;
+  background:var(--card);
+  border:3px solid var(--ink);
+  border-radius:var(--wobble);
+  box-shadow:var(--shadow-hard-lg);
+  padding:46px 54px 42px;
+  max-width:min(640px, 90vw);
+  text-align:center;
+  animation:sway 6s var(--ease) infinite;
+  transform-origin:50% -40px;
+}
+@keyframes sway{
+  0%,100%{transform:rotate(-.5deg)}
+  50%    {transform:rotate(.5deg)}
+}
+
+h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(30px, 6.2vw, 58px);
+  line-height:1.04;
+  letter-spacing:-.025em;
+  text-wrap:balance;
+}
+
+.etr{
+  margin-top:22px;
+  padding-top:20px;
+  border-top:2px dashed var(--rule);
+  font-family:var(--mono);
+  font-size:clamp(14px, 2.5vw, 20px);
+  font-weight:600;
+  letter-spacing:.07em;
+  color:var(--orange);
+  text-transform:uppercase;
+}
+
+/* ───────── base: posts + scattered props ───────── */
+/* legs stretch to fill whatever space is left between sign and ground */
+.legs{
+  flex:1 1 auto;
+  position:relative;
+  width:min(640px, 90vw);
+  min-height:56px;
+  margin-top:-10px;
+  z-index:1;
+  pointer-events:none;
+}
+.legs span{
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:16px;
+  background:var(--cocoa);
+  border:3px solid var(--ink);
+  border-top:none;
+  border-bottom:none;
+}
+.legs span:first-child{left:17%}
+.legs span:last-child{right:17%}
+
+.base{
+  position:relative;
+  width:100%;
+  z-index:2;
+  /* 9.375vw is the svg's own 1600:150 ratio, so it fits exactly until the
+     floor kicks in on narrow screens and the scene crops instead of shrinking */
+  height:clamp(64px, 9.375vw, 150px);
+}
+.props{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.ground{
+  position:relative;
+  z-index:2;
+  flex:none;
+  width:100%;
+  height:72px;
+  border-top:3px solid var(--ink);
+  background:repeating-linear-gradient(
+    -45deg, transparent 0 9px, var(--rule) 9px 10px);
+  opacity:.9;
+}
+
+.beacon{animation:beacon 1.8s ease-in-out infinite}
+@keyframes beacon{0%,100%{opacity:.3}50%{opacity:1}}
+
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+
+@media (max-width:620px){
+  .sign{padding:32px 24px 28px}
+  .ground{height:52px}
+}
+</style>
+</head>
+<body>
+
+<div class="tape tape-top" aria-hidden="true"></div>
+
+<main>
+
+  <div class="sign">
+    <h1>Down Due to Legal Process</h1>
+    <p class="etr">ETR: Mid 2027</p>
+  </div>
+
+  <div class="legs" aria-hidden="true"><span></span><span></span></div>
+
+  <div class="base" aria-hidden="true">
+    <svg class="props" viewBox="0 0 1600 150" fill="none"
+         preserveAspectRatio="xMidYMax slice"
+         stroke-linejoin="round" stroke-linecap="round">
+
+      <!-- sawhorse -->
+      <g>
+        <rect x="24" y="110" width="62" height="7" rx="3" fill="var(--cocoa)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M34 117 L26 150 M76 117 L84 150" stroke="var(--ink)" stroke-width="3.6"/>
+      </g>
+
+      <!-- cone -->
+      <g>
+        <path d="M118 150 L131 110 L144 150 Z" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M124 134 H138" stroke="var(--card)" stroke-width="4.5"/>
+        <rect x="112" y="144" width="38" height="7" rx="3" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.4"/>
+      </g>
+
+      <!-- brick stack -->
+      <g fill="var(--orange)" stroke="var(--ink)" stroke-width="2">
+        <rect x="178" y="140" width="24" height="10" rx="2"/>
+        <rect x="204" y="140" width="24" height="10" rx="2"/>
+        <rect x="191" y="128" width="24" height="10" rx="2"/>
+        <rect x="217" y="128" width="24" height="10" rx="2"/>
+        <rect x="178" y="116" width="24" height="10" rx="2"/>
+      </g>
+
+      <!-- scaffold tower -->
+      <g>
+        <g stroke="var(--steel)" stroke-width="3.4">
+          <path d="M276 84 V150 M316 84 V150"/>
+          <path d="M276 106 H316 M276 128 H316"/>
+          <path d="M276 106 L316 128 M276 128 L316 150"/>
+        </g>
+        <rect x="270" y="77" width="52" height="8" rx="3" fill="var(--cocoa)" stroke="var(--ink)" stroke-width="2.4"/>
+      </g>
+
+      <!-- toolbox -->
+      <g>
+        <path d="M362 126 v-5 a10 10 0 0 1 20 0 v5" stroke="var(--ink)" stroke-width="2.6"/>
+        <rect x="350" y="126" width="44" height="24" rx="3" fill="var(--blueprint)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M350 136 H394" stroke="var(--ink)" stroke-width="2"/>
+      </g>
+
+      <!-- paint bucket -->
+      <g>
+        <path d="M414 126 a11 7 0 0 1 22 0" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M410 128 L414 150 H436 L440 128 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M410 128 H440" stroke="var(--ink)" stroke-width="2.4"/>
+      </g>
+
+      <!-- drum -->
+      <g>
+        <rect x="462" y="114" width="32" height="36" rx="4" fill="var(--amber)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M462 124 H494 M462 140 H494" stroke="var(--ink)" stroke-width="1.8" opacity=".45"/>
+      </g>
+
+      <!-- caution sign -->
+      <g>
+        <path d="M512 124 L530 92 L548 124 Z" fill="var(--amber)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M530 103 v8" stroke="var(--ink)" stroke-width="2.6"/>
+        <circle cx="530" cy="117" r="1.8" fill="var(--ink)"/>
+        <path d="M522 124 L517 150 M538 124 L543 150" stroke="var(--ink)" stroke-width="3"/>
+      </g>
+
+      <!-- leaning planks -->
+      <g>
+        <path d="M576 150 L596 98 M586 150 L606 98 M596 150 L616 98"
+              stroke="var(--ink)" stroke-width="9"/>
+        <path d="M576 150 L596 98 M586 150 L606 98 M596 150 L616 98"
+              stroke="var(--cocoa)" stroke-width="5"/>
+      </g>
+
+      <!-- wheelbarrow -->
+      <g>
+        <path d="M648 118 L694 118 L684 140 L656 140 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M694 122 L708 138" stroke="var(--ink)" stroke-width="2.8"/>
+        <path d="M658 140 L656 150" stroke="var(--ink)" stroke-width="2.4"/>
+        <circle cx="664" cy="144" r="7" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4"/>
+      </g>
+
+      <!-- small cone -->
+      <g>
+        <path d="M734 150 L744 120 L754 150 Z" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.2"/>
+        <path d="M739 138 H749" stroke="var(--card)" stroke-width="3.6"/>
+        <rect x="729" y="145" width="30" height="6" rx="3" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.2"/>
+      </g>
+
+      <!-- pipe stack -->
+      <g fill="var(--steel)" stroke="var(--ink)" stroke-width="2.2">
+        <circle cx="790" cy="141" r="9"/>
+        <circle cx="808" cy="141" r="9"/>
+        <circle cx="826" cy="141" r="9"/>
+        <circle cx="799" cy="125" r="9"/>
+        <circle cx="817" cy="125" r="9"/>
+      </g>
+
+      <!-- cement mixer -->
+      <g>
+        <circle cx="888" cy="118" r="22" fill="var(--steel)" stroke="var(--ink)" stroke-width="2.6"/>
+        <circle cx="888" cy="118" r="11" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="2.2"/>
+        <path d="M872 136 L866 146 M904 136 L910 146" stroke="var(--ink)" stroke-width="2.8"/>
+        <rect x="860" y="143" width="56" height="7" rx="3" fill="var(--cocoa)" stroke="var(--ink)" stroke-width="2.2"/>
+      </g>
+
+      <!-- shovel + pail -->
+      <g>
+        <path d="M956 150 L968 108" stroke="var(--ink)" stroke-width="3.2"/>
+        <path d="M962 108 h12" stroke="var(--ink)" stroke-width="3.2"/>
+        <path d="M950 150 a8 11 0 0 1 14 -4 Z" fill="var(--steel)" stroke="var(--ink)" stroke-width="2.2"/>
+      </g>
+
+      <!-- a-frame barrier -->
+      <g>
+        <rect x="1000" y="110" width="58" height="13" rx="2" fill="var(--amber)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M1012 110 L1004 123 M1026 110 L1018 123 M1040 110 L1032 123 M1054 110 L1046 123"
+              stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M1010 123 L1006 150 M1048 123 L1052 150" stroke="var(--ink)" stroke-width="3"/>
+      </g>
+
+      <!-- cone -->
+      <g>
+        <path d="M1090 150 L1102 112 L1114 150 Z" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M1096 135 H1109" stroke="var(--card)" stroke-width="4.2"/>
+        <rect x="1084" y="144" width="36" height="7" rx="3" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.4"/>
+      </g>
+
+      <!-- ladder -->
+      <g stroke="var(--cocoa)" stroke-width="4.4">
+        <path d="M1150 150 L1162 86 M1176 150 L1182 86"/>
+      </g>
+      <g stroke="var(--cocoa)" stroke-width="3.4">
+        <path d="M1154 134 H1178 M1157 118 H1179 M1160 102 H1180"/>
+      </g>
+
+      <!-- scattered bricks -->
+      <g fill="var(--orange)" stroke="var(--ink)" stroke-width="2">
+        <rect x="1212" y="140" width="24" height="10" rx="2"/>
+        <rect x="1238" y="140" width="24" height="10" rx="2"/>
+        <rect x="1225" y="128" width="24" height="10" rx="2"/>
+      </g>
+
+      <!-- hard hat on the ground -->
+      <g>
+        <path d="M1290 143 a13 12 0 0 1 26 0 Z" fill="var(--amber)" stroke="var(--ink)" stroke-width="2.4"/>
+        <rect x="1283" y="142" width="40" height="8" rx="4" fill="var(--amber)" stroke="var(--ink)" stroke-width="2.4"/>
+      </g>
+
+      <!-- sawhorse -->
+      <g>
+        <rect x="1352" y="112" width="58" height="7" rx="3" fill="var(--cocoa)" stroke="var(--ink)" stroke-width="2.4"/>
+        <path d="M1362 119 L1354 150 M1400 119 L1408 150" stroke="var(--ink)" stroke-width="3.6"/>
+      </g>
+
+      <!-- pipes lying down -->
+      <g fill="var(--steel)" stroke="var(--ink)" stroke-width="2.2">
+        <rect x="1436" y="138" width="72" height="12" rx="6"/>
+        <rect x="1448" y="125" width="52" height="12" rx="6"/>
+      </g>
+
+      <!-- warning lamp on a post -->
+      <g>
+        <path d="M1546 150 V104" stroke="var(--ink)" stroke-width="3"/>
+        <circle class="beacon" cx="1546" cy="97" r="8" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.4"/>
+      </g>
+
+      <!-- cone -->
+      <g>
+        <path d="M1566 150 L1576 122 L1586 150 Z" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.2"/>
+        <rect x="1561" y="145" width="30" height="6" rx="3" fill="var(--orange)" stroke="var(--ink)" stroke-width="2.2"/>
+      </g>
+
+    </svg>
+  </div>
+
+</main>
+
+<div class="ground" aria-hidden="true"></div>
+<div class="tape tape-bottom" aria-hidden="true"></div>
+
+</body>
+</html>

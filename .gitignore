@@ -1,0 +1,10 @@
+# local tooling and editor state
+.claude/
+.DS_Store
+*.bak
+
+# pre-revamp backups of the old design (local safety net, not the site)
+.backup-pre-revamp/
+
+# vendored Claude skills collection — reference material, not part of the site
+skills/
