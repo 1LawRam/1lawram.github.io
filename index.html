@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Down Due to Legal Process — Lawrence Lei-Ramirez</title>
-<meta name="description" content="This site is down due to legal process. Estimated time of return: mid 2027.">
+<title>Temporarily Unavailable Due to Legal Process — Lawrence Lei-Ramirez</title>
+<meta name="description" content="This site is temporarily unavailable due to legal process. Estimated time of return: mid 2027.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://lawrenceleiramirez.com/">
 
@@ -81,7 +81,7 @@ body{
   position:fixed; left:50%; top:45%;
   transform:translate(-50%,-50%) rotate(-1.2deg);
   z-index:3;
-  width:min(420px,62vw);
+  width:min(470px,66vw);
   background:var(--card);
   padding:clamp(20px,3.4vw,34px) clamp(18px,3vw,30px) clamp(16px,2.6vw,26px);
   text-align:center;
@@ -89,7 +89,7 @@ body{
 }
 .paper::after{content:"";position:absolute;inset:0;border:1px solid rgba(0,0,0,.13);pointer-events:none}
 
-h1{font-family:var(--display);font-weight:800;font-size:clamp(21px,4.3vw,36px);line-height:1.06;letter-spacing:-.022em}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);line-height:1.06;letter-spacing:-.022em}
 .etr{
   margin-top:clamp(10px,1.7vw,16px);
   padding-top:clamp(10px,1.7vw,16px);
@@ -119,7 +119,7 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(21px,4.3vw,36px);l
     -webkit-clip-path:polygon(0 0,176px 0,176px 126px,88px 126px,88px 84px,0 84px);
     clip-path:polygon(0 0,176px 0,176px 126px,88px 126px,88px 84px,0 84px);
   }
-  .paper{width:74vw;top:42%}
+  .paper{width:80vw;top:42%}
 }
 </style>
 </head>
@@ -131,7 +131,7 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(21px,4.3vw,36px);l
 <div class="paper">
   <span class="t tl"></span><span class="t tr"></span>
   <span class="t bl"></span><span class="t br"></span>
-  <h1>Down Due to<br>Legal Process</h1>
+  <h1>Temporarily Unavailable<br>Due to Legal Process</h1>
   <p class="etr">ETR: Mid 2027</p>
   <img class="sig" src="images/signature.svg" alt="Lawrence Lei-Ramirez, signed">
 </div>
@@ -147,19 +147,35 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(21px,4.3vw,36px);l
 
     <!-- cement mixer -->
     <g>
-      <path d="M128 214 L178 150 M252 214 L198 150" stroke="var(--ink)" stroke-width="8"/>
-      <rect x="104" y="206" width="172" height="14" rx="7" fill="var(--cocoa)" stroke="var(--ink)" stroke-width="3.4"/>
-      <circle cx="286" cy="196" r="22" fill="var(--steel)" stroke="var(--ink)" stroke-width="3.4"/>
-      <circle cx="286" cy="196" r="7" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.6"/>
-      <g transform="rotate(-22 188 112)">
-        <ellipse cx="188" cy="112" rx="76" ry="58" fill="var(--steel)" stroke="var(--ink)" stroke-width="4"/>
-        <path d="M188 54 a76 58 0 0 1 0 116" fill="rgba(22,18,14,.1)"/>
-        <ellipse cx="188" cy="76" rx="40" ry="17" fill="var(--paper)" stroke="var(--ink)" stroke-width="3.4"/>
-        <path d="M124 128 q64 26 128 0" stroke="var(--ink)" stroke-width="2.6" opacity=".45"/>
-        <path d="M130 146 q58 20 116 0" stroke="var(--ink)" stroke-width="2.6" opacity=".45"/>
+      <!-- rear wheel, tangent to the ground -->
+      <circle cx="256" cy="186" r="28" fill="var(--steel)" stroke="var(--ink)" stroke-width="4"/>
+      <g stroke="var(--ink)" stroke-width="2.6" opacity=".45">
+        <path d="M256 160 V212 M230 186 H282 M238 168 L274 204 M274 168 L238 204"/>
       </g>
-      <path d="M100 126 h-34 v34" stroke="var(--ink)" stroke-width="4.4"/>
-      <circle cx="66" cy="166" r="11" fill="var(--amber)" stroke="var(--ink)" stroke-width="3.4"/>
+      <circle cx="256" cy="186" r="9" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+
+      <!-- frame: strut to the wheel, leg to the foot -->
+      <path d="M192 172 L256 186" stroke="var(--ink)" stroke-width="8"/>
+      <path d="M192 172 L150 208" stroke="var(--ink)" stroke-width="8"/>
+      <rect x="124" y="205" width="52" height="14" rx="7" fill="var(--cocoa)" stroke="var(--ink)" stroke-width="3.2"/>
+      <path d="M176 190 L232 180" stroke="var(--ink)" stroke-width="5" opacity=".75"/>
+
+      <!-- drum -->
+      <g transform="rotate(-20 196 112)">
+        <ellipse cx="196" cy="112" rx="70" ry="56" fill="var(--steel)" stroke="var(--ink)" stroke-width="4"/>
+        <path d="M196 56 a70 56 0 0 1 0 112" fill="rgba(22,18,14,.1)"/>
+        <path d="M136 132 q60 22 120 0" stroke="var(--ink)" stroke-width="2.6" opacity=".4"/>
+        <path d="M143 150 q53 17 106 0" stroke="var(--ink)" stroke-width="2.6" opacity=".4"/>
+        <ellipse cx="196" cy="58" rx="44" ry="17" fill="var(--steel)" stroke="var(--ink)" stroke-width="3.6"/>
+        <ellipse cx="196" cy="58" rx="31" ry="11" fill="#4a3b30" stroke="var(--ink)" stroke-width="2.4"/>
+      </g>
+
+      <!-- tilt lever: trunnion, arm, grip -->
+      <circle cx="140" cy="140" r="11" fill="var(--steel)" stroke="var(--ink)" stroke-width="3.6"/>
+      <circle cx="140" cy="140" r="3.4" fill="var(--ink)"/>
+      <path d="M140 140 L100 174" stroke="var(--ink)" stroke-width="9"/>
+      <path d="M100 174 L78 192" stroke="var(--ink)" stroke-width="18" stroke-linecap="round"/>
+      <path d="M100 174 L78 192" stroke="var(--cocoa)" stroke-width="11" stroke-linecap="round"/>
     </g>
 
     <!-- mortar pile with the trowel standing in it -->
