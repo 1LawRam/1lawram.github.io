@@ -77,11 +77,19 @@ body{
 @keyframes slide{to{background-position:50.9px 0}}
 
 /* the notice, taped to the wall */
-.paper{
-  position:fixed; left:50%; top:45%;
-  transform:translate(-50%,-50%) rotate(-1.2deg);
+.notices{
+  position:fixed; left:50%; top:44%;
+  transform:translate(-50%,-50%);
   z-index:3;
   width:min(470px,66vw);
+  display:flex; flex-direction:column; align-items:center;
+  gap:clamp(16px,2.4vw,26px);
+}
+
+.paper{
+  position:relative;
+  transform:rotate(-1.2deg);
+  width:100%;
   background:var(--card);
   padding:clamp(20px,3.4vw,34px) clamp(18px,3vw,30px) clamp(16px,2.6vw,26px);
   text-align:center;
@@ -101,12 +109,46 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
 }
 .sig{display:block;width:44%;margin:clamp(10px,1.7vw,16px) auto 0;opacity:.9}
 
+/* the countdown, on its own slip taped under the notice */
+.slip{
+  position:relative;
+  width:88%;
+  transform:rotate(1.5deg);
+  background:var(--card);
+  padding:clamp(12px,1.9vw,17px) clamp(12px,2vw,18px) clamp(10px,1.6vw,14px);
+  box-shadow:5px 6px 0 rgba(22,18,14,.26);
+}
+.slip::after{content:"";position:absolute;inset:0;border:1px solid rgba(0,0,0,.12);pointer-events:none}
+.slip-h{
+  font-family:var(--mono);font-weight:600;
+  font-size:clamp(7.5px,1.02vw,10px);
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--brick-2);text-align:center;
+  margin-bottom:clamp(7px,1.1vw,10px);
+}
+.cd{display:grid;grid-template-columns:repeat(6,1fr);gap:1px}
+.cd>div{text-align:center}
+.cd b{
+  display:block;font-family:var(--mono);font-weight:600;
+  font-size:clamp(13px,2.05vw,20px);line-height:1.05;
+  font-variant-numeric:tabular-nums;
+}
+.cd i{
+  display:block;font-style:normal;
+  font-size:clamp(6.5px,.92vw,9px);
+  letter-spacing:.08em;text-transform:uppercase;
+  color:#8b7a66;margin-top:4px;
+}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
 .t{position:absolute;width:26%;height:0;padding-bottom:8.5%;
     background:rgba(242,177,52,.6);border:1px solid rgba(0,0,0,.16)}
 .t.tl{top:-4%;left:-8%;transform:rotate(-34deg)}
 .t.tr{top:-4%;right:-8%;transform:rotate(34deg)}
 .t.bl{bottom:-4%;left:-8%;transform:rotate(34deg)}
 .t.br{bottom:-4%;right:-8%;transform:rotate(-34deg)}
+.t.tc{top:-13px;left:50%;width:clamp(74px,24%,112px);height:26px;padding-bottom:0;
+      transform:translateX(-50%) rotate(-2.5deg)}
 
 .floor{position:fixed;left:0;right:0;bottom:var(--tape-h);z-index:2;
         height:clamp(158px,21vw,270px);pointer-events:none}
@@ -119,7 +161,7 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
     -webkit-clip-path:polygon(0 0,176px 0,176px 126px,88px 126px,88px 84px,0 84px);
     clip-path:polygon(0 0,176px 0,176px 126px,88px 126px,88px 84px,0 84px);
   }
-  .paper{width:80vw;top:42%}
+  .notices{width:84vw;top:42%}
 }
 </style>
 </head>
@@ -128,12 +170,30 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
 <div class="wall" aria-hidden="true"><div class="notch"></div></div>
 <div class="tape tape-top" aria-hidden="true"></div>
 
-<div class="paper">
-  <span class="t tl"></span><span class="t tr"></span>
-  <span class="t bl"></span><span class="t br"></span>
-  <h1>Temporarily Unavailable<br>Due to Legal Process</h1>
-  <p class="etr">ETR: Mid 2027</p>
-  <img class="sig" src="images/signature.svg" alt="Lawrence Lei-Ramirez, signed">
+<div class="notices">
+
+  <div class="paper">
+    <span class="t tl"></span><span class="t tr"></span>
+    <span class="t bl"></span><span class="t br"></span>
+    <h1>Temporarily Unavailable<br>Due to Legal Process</h1>
+    <p class="etr">ETR: Mid 2027</p>
+    <img class="sig" src="images/signature.svg" alt="Lawrence Lei-Ramirez, signed">
+  </div>
+
+  <div class="slip">
+    <span class="t tc"></span>
+    <p class="slip-h">Until 1 June 2027</p>
+    <div class="cd" aria-hidden="true">
+      <div><b data-cd="mo">&ndash;</b><i>Mo</i></div>
+      <div><b data-cd="wk">&ndash;</b><i>Wk</i></div>
+      <div><b data-cd="d">&ndash;</b><i>Day</i></div>
+      <div><b data-cd="h">&ndash;</b><i>Hr</i></div>
+      <div><b data-cd="m">&ndash;</b><i>Min</i></div>
+      <div><b data-cd="s">&ndash;</b><i>Sec</i></div>
+    </div>
+    <p class="sr-only">Estimated return: 1 June 2027.</p>
+  </div>
+
 </div>
 
 <div class="floor" aria-hidden="true">
@@ -209,6 +269,54 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
 </div>
 
 <div class="tape tape-bottom" aria-hidden="true"></div>
+
+<script>
+(function () {
+  // 1 June 2027, 00:00 in Little Rock (CDT, UTC-5) — one fixed instant for everyone
+  var TARGET = Date.UTC(2027, 5, 1, 5, 0, 0);
+
+  var cell = {};
+  document.querySelectorAll('[data-cd]').forEach(function (el) {
+    cell[el.getAttribute('data-cd')] = el;
+  });
+  if (!cell.s) return;
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function tick() {
+    var now = Date.now();
+    if (now >= TARGET) {
+      ['mo','wk','d','h','m','s'].forEach(function (k) { cell[k].textContent = '0'; });
+      clearInterval(timer);
+      return;
+    }
+
+    // whole calendar months first, then the remainder as clock time
+    var anchor = new Date(now), months = 0;
+    for (;;) {
+      var next = new Date(anchor.getTime());
+      next.setMonth(next.getMonth() + 1);
+      if (next.getTime() <= TARGET) { anchor = next; months++; } else { break; }
+    }
+
+    var rest = Math.floor((TARGET - anchor.getTime()) / 1000);
+    var weeks = Math.floor(rest / 604800); rest -= weeks * 604800;
+    var days  = Math.floor(rest / 86400);  rest -= days  * 86400;
+    var hours = Math.floor(rest / 3600);   rest -= hours * 3600;
+    var mins  = Math.floor(rest / 60);     rest -= mins  * 60;
+
+    cell.mo.textContent = String(months);
+    cell.wk.textContent = String(weeks);
+    cell.d.textContent  = String(days);
+    cell.h.textContent  = pad(hours);
+    cell.m.textContent  = pad(mins);
+    cell.s.textContent  = pad(rest);
+  }
+
+  tick();
+  var timer = setInterval(tick, 1000);
+})();
+</script>
 
 </body>
 </html>
