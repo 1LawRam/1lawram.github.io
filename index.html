@@ -139,7 +139,6 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
   letter-spacing:.08em;text-transform:uppercase;
   color:#8b7a66;margin-top:4px;
 }
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 .t{position:absolute;width:26%;height:0;padding-bottom:8.5%;
     background:rgba(242,177,52,.6);border:1px solid rgba(0,0,0,.16)}
@@ -182,8 +181,8 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
 
   <div class="slip">
     <span class="t tc"></span>
-    <p class="slip-h">Until 1 June 2027</p>
-    <div class="cd" aria-hidden="true">
+    <p class="slip-h">Be Back In</p>
+    <div class="cd" role="timer" aria-label="Time until this site is back">
       <div><b data-cd="mo">&ndash;</b><i>Mo</i></div>
       <div><b data-cd="wk">&ndash;</b><i>Wk</i></div>
       <div><b data-cd="d">&ndash;</b><i>Day</i></div>
@@ -191,7 +190,6 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
       <div><b data-cd="m">&ndash;</b><i>Min</i></div>
       <div><b data-cd="s">&ndash;</b><i>Sec</i></div>
     </div>
-    <p class="sr-only">Estimated return: 1 June 2027.</p>
   </div>
 
 </div>
