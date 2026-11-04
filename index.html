@@ -140,6 +140,16 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
   color:#8b7a66;margin-top:4px;
 }
 
+/* the notice has two states: counting down, and back-soon */
+.st-back{display:none}
+.st-back h1{font-size:clamp(23px,4.6vw,39px)}
+html.is-back .st-wait{display:none}
+html.is-back .st-back{display:block}
+html.is-back .slip{display:none}
+
+/* the wheelbarrow is the only thing on the floor that takes a click */
+.barrow{pointer-events:auto;cursor:pointer}
+
 .t{position:absolute;width:26%;height:0;padding-bottom:8.5%;
     background:rgba(242,177,52,.6);border:1px solid rgba(0,0,0,.16)}
 .t.tl{top:-4%;left:-8%;transform:rotate(-34deg)}
@@ -174,8 +184,14 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
   <div class="paper">
     <span class="t tl"></span><span class="t tr"></span>
     <span class="t bl"></span><span class="t br"></span>
-    <h1>Temporarily Unavailable<br>Due to Legal Process</h1>
-    <p class="etr">ETR: Mid 2027</p>
+    <div class="st st-wait">
+      <h1>Temporarily Unavailable<br>Due to Legal Process</h1>
+      <p class="etr">ETR: Mid 2027</p>
+    </div>
+    <div class="st st-back">
+      <h1>Be Back Soon</h1>
+      <p class="etr">Polishing final details</p>
+    </div>
     <img class="sig" src="images/signature.svg" alt="Lawrence Lei-Ramirez, signed">
   </div>
 
@@ -249,11 +265,25 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
       </g>
     </g>
 
+    <!-- wheelbarrow -->
+    <g class="barrow">
+      <circle cx="546" cy="196" r="18" fill="var(--steel)" stroke="var(--ink)" stroke-width="3.4"/>
+      <circle cx="546" cy="196" r="6" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.4"/>
+      <path d="M546 196 L590 170" stroke="var(--ink)" stroke-width="6"/>
+      <path d="M656 192 L666 214" stroke="var(--ink)" stroke-width="6"/>
+      <path d="M566 146 L690 146 L658 192 L592 192 Z" fill="var(--amber)" stroke="var(--ink)" stroke-width="3.6"/>
+      <path d="M588 146 q42 -24 86 0 Z" fill="var(--rule)" stroke="var(--ink)" stroke-width="3"/>
+      <path d="M566 146 H690" stroke="var(--ink)" stroke-width="4"/>
+      <path d="M686 152 L738 138" stroke="var(--ink)" stroke-width="6"/>
+      <path d="M738 138 L758 133" stroke="var(--ink)" stroke-width="14" stroke-linecap="round"/>
+      <path d="M738 138 L758 133" stroke="var(--cocoa)" stroke-width="8.5" stroke-linecap="round"/>
+    </g>
+
     <!-- bucket -->
     <g>
-      <path d="M548 158 a26 15 0 0 1 52 0" stroke="var(--ink)" stroke-width="3.2"/>
-      <path d="M542 160 L551 214 H597 L606 160 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="3.6"/>
-      <path d="M542 160 H606" stroke="var(--ink)" stroke-width="3.6"/>
+      <path d="M986 158 a26 15 0 0 1 52 0" stroke="var(--ink)" stroke-width="3.2"/>
+      <path d="M980 160 L989 214 H1035 L1044 160 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="3.6"/>
+      <path d="M980 160 H1044" stroke="var(--ink)" stroke-width="3.6"/>
     </g>
 
     <!-- loose bricks lying on the ground, where the pale floor shows them off -->
@@ -272,32 +302,36 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
 (function () {
   // 1 June 2027, 00:00 in Little Rock (CDT, UTC-5) — one fixed instant for everyone
   var TARGET = Date.UTC(2027, 5, 1, 5, 0, 0);
+  var root = document.documentElement;
 
   var cell = {};
   document.querySelectorAll('[data-cd]').forEach(function (el) {
     cell[el.getAttribute('data-cd')] = el;
   });
-  if (!cell.s) return;
 
   function pad(n) { return n < 10 ? '0' + n : String(n); }
+  function reached() { return Date.now() >= TARGET; }
+
+  function setBack(on) {
+    root.classList.toggle('is-back', on);
+    document.title = on
+      ? 'Be Back Soon — Lawrence Lei-Ramirez'
+      : 'Temporarily Unavailable Due to Legal Process — Lawrence Lei-Ramirez';
+  }
 
   function tick() {
-    var now = Date.now();
-    if (now >= TARGET) {
-      ['mo','wk','d','h','m','s'].forEach(function (k) { cell[k].textContent = '0'; });
-      clearInterval(timer);
-      return;
-    }
+    if (reached()) { setBack(true); clearInterval(timer); return; }
+    if (!cell.s) return;
 
     // whole calendar months first, then the remainder as clock time
-    var anchor = new Date(now), months = 0;
+    var anchor = new Date(), months = 0;
     for (;;) {
       var next = new Date(anchor.getTime());
       next.setMonth(next.getMonth() + 1);
       if (next.getTime() <= TARGET) { anchor = next; months++; } else { break; }
     }
 
-    var rest = Math.floor((TARGET - anchor.getTime()) / 1000);
+    var rest  = Math.floor((TARGET - anchor.getTime()) / 1000);
     var weeks = Math.floor(rest / 604800); rest -= weeks * 604800;
     var days  = Math.floor(rest / 86400);  rest -= days  * 86400;
     var hours = Math.floor(rest / 3600);   rest -= hours * 3600;
@@ -313,6 +347,22 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(17px,3.5vw,29px);l
 
   tick();
   var timer = setInterval(tick, 1000);
+
+  // five taps on the wheelbarrow previews the back-soon screen (and flips back),
+  // so the finished state can be checked without waiting for the date
+  var barrow = document.querySelector('.barrow');
+  if (barrow) {
+    var taps = 0, last = 0;
+    barrow.addEventListener('click', function () {
+      var now = Date.now();
+      taps = (now - last > 2000) ? 1 : taps + 1;
+      last = now;
+      if (taps >= 5) {
+        taps = 0;
+        if (!reached()) setBack(!root.classList.contains('is-back'));
+      }
+    });
+  }
 })();
 </script>
 
