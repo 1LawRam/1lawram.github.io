@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drone Frame Impact Study — Lawrence Lei-Ramirez</title>
+<meta name="description" content="Five load cells, a printed quadcopter frame and a five-foot drop, repeated — measuring where a drone frame actually takes the force in a crash.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://lawrenceleiramirez.com/work/arksef.html">
+
+<link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../images/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lawrence Lei-Ramirez">
+<meta property="og:url" content="https://lawrenceleiramirez.com/work/arksef.html">
+<meta property="og:title" content="Drone Frame Impact Study — Where a drone frame takes the load">
+<meta property="og:description" content="Five load cells, a printed quadcopter frame and a five-foot drop, repeated — measuring where a drone frame actually takes the force in a crash.">
+<meta property="og:image" content="https://lawrenceleiramirez.com/images/og-arksef.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Where a drone frame takes the load — ARKSEF 2026 impact study">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Drone Frame Impact Study — Where a drone frame takes the load">
+<meta name="twitter:description" content="Five load cells, a printed quadcopter frame and a five-foot drop, repeated — measuring where a drone frame actually takes the force in a crash.">
+<meta name="twitter:image" content="https://lawrenceleiramirez.com/images/og-arksef.png">
+<meta name="twitter:image:alt" content="Where a drone frame takes the load — ARKSEF 2026 impact study">
+<link rel="preload" href="../fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function () {
+  var d = document.documentElement;
+  try { var t = localStorage.getItem('llr-theme'); d.setAttribute('data-theme', t === 'light' ? 'light' : 'dark'); } catch (e) {}
+  try {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && sessionStorage.getItem('llr-warp') === '1') d.classList.add('warp-in');
+  } catch (e) {}
+})();
+</script>
+<noscript><style>[data-rv],[data-stagger]>*{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body class="page-drone">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <a class="brand" href="../index.html" data-warp aria-label="Lawrence Lei-Ramirez — home">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5 27.7 9.25v13.5L16 29.5 4.3 22.75V9.25Z" fill="var(--signal)" stroke="var(--ink)" stroke-width="2.4" stroke-linejoin="round"/><circle cx="16" cy="16" r="5" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.4"/></svg>
+    <span class="brand-name">Lawrence Lei-Ramirez</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="../index.html" data-warp>Home</a>
+    <a href="../index.html#work" data-warp aria-current="page">Work</a>
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#contact">Contact</a>
+  </nav>
+  <div class="nav-tools">
+    <button class="theme-btn" data-theme-btn aria-label="Toggle dark mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+    </button>
+    <button class="index-btn" id="indexBtn" aria-expanded="false" aria-controls="indexPanel" aria-label="Open index">
+      <span class="index-btn-label">Index</span>
+      <span class="burger" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </div>
+</header>
+
+<div class="index-panel" id="indexPanel" role="dialog" aria-modal="true" aria-label="Site index">
+  <div class="index-in">
+    <ol class="index-list">
+      <li><a href="../index.html"><span class="n">00</span><span class="t">Home</span><span class="k">Built. Not bought.</span></a></li>
+      <li><a href="../index.html#skills"><span class="n">01</span><span class="t">Capabilities</span><span class="k">Eight skills</span></a></li>
+      <li><a href="../index.html#work"><span class="n">02</span><span class="t">Selected work</span><span class="k">Two builds</span></a></li>
+      <li><a href="../index.html#prints"><span class="n">03</span><span class="t">MakerWorld</span><span class="k">Printable models</span></a></li>
+      <li><a href="../index.html#how"><span class="n">04</span><span class="t">How I work</span><span class="k">Four steps</span></a></li>
+      <li><a href="../index.html#roadmap"><span class="n">05</span><span class="t">Roadmap</span><span class="k">Through 2028</span></a></li>
+      <li><a href="../index.html#about"><span class="n">06</span><span class="t">About</span><span class="k">Who’s building</span></a></li>
+      <li><a href="../index.html#contact"><span class="n">07</span><span class="t">Contact</span><span class="k">Get in touch</span></a></li>
+    </ol>
+    <div class="index-side">
+      <div class="index-proj">
+        <p class="mono-k">Project pages</p>
+        <a href="ferros.html" data-warp><b>Project Ferros</b><span>In development · the build log</span></a>
+        <a href="arksef.html" data-warp aria-current="page"><b>Drone Frame Impact Study</b><span>Completed · ARKSEF 2026</span></a>
+      </div>
+      <span class="char index-char" data-char="explorer" data-state="curious"></span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <section class="p-hero" aria-label="Drone Frame Impact Study">
+    <div class="wrap">
+      <a class="back-link" href="../index.html#work" data-warp>
+        <svg viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l5 5-5 5"/></svg>
+        All work
+      </a>
+      <p class="eyebrow" data-rv><span class="chip" style="color:var(--ink)"><i></i>Completed</span>ARKSEF 2026 &middot; Independent research</p>
+      <h1 class="p-h" data-rv>Where a drone frame takes <span>the load.</span></h1>
+
+      <div class="p-hero-grid">
+        <div data-rv>
+          <p class="aside">five sensors and a lot of repeated drops</p>
+          <p class="lede">
+            Five load cells, a 3D-printed quadcopter frame, and a five-foot drop, repeated until there
+            was enough data to say something useful.
+          </p>
+        </div>
+        <span class="char p-char" data-char="explorer" data-state="working" data-on-hover="greeting"></span>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Key figures" style="padding-bottom:clamp(56px,8vw,110px)">
+    <div class="wrap">
+      <div class="stats" data-rv>
+        <div><span class="stat-k">Kruskal–Wallis p</span><span class="stat-v">0.001</span></div>
+        <div><span class="stat-k">Load cells</span><span class="stat-v">5</span></div>
+        <div><span class="stat-k">Drop height</span><span class="stat-v">5 ft</span></div>
+        <div><span class="stat-k">Frames cracked</span><span class="stat-v">2</span></div>
+      </div>
+
+      <div class="photo-row" style="margin-top:clamp(36px,5vw,64px)">
+        <figure class="fig photo-slot" data-photo="../images/arksef-frame.jpg" data-alt="Instrumented 3D-printed drone test frame with load cells">
+          <div class="fig-frame r16x9"></div>
+          <figcaption>Fig. 01 — Instrumented test frame, sensors on each arm and at center</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker slim" style="--tk-dur:30s;--tk-bg:var(--cobalt);--tk-ink:#f4f1ea" aria-hidden="true">
+    <div class="ticker-track">
+      <span>ARKSEF 2026</span><span>5 load cells</span><span>Kruskal&ndash;Wallis p = 0.001</span><span>Reinforce the hub</span>
+    </div>
+  </div>
+
+  <section class="sec" aria-label="The question">
+    <div class="wrap two-col">
+      <div>
+        <p class="eyebrow" data-rv style="margin-bottom:20px"><span class="eb-n">01</span>The question</p>
+        <h2 class="h-l" data-rv>Where does the force go when a drone crashes?</h2>
+      </div>
+      <div class="prose" data-rv>
+        <p class="lede">If impact loading concentrates in a predictable place, frames can be reinforced there instead of everywhere.</p>
+        <p>Drone flying has gotten far more accessible, which means a lot of first-time pilots putting airframes into the ground during the learning period. Repair cost is the friction point. Knowing how a crash distributes force across the frame is the first step toward a geometry that survives it — or at least fails somewhere cheap to replace.</p>
+        <p>My hypothesis was that the center hub — where all four arms converge — would carry the highest peak force on impact. Five sensors and a repeatable drop were the way to find out whether that held.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="Method" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow" data-rv><span class="eb-n">02</span>Method</p>
+        <h2 class="h-l" data-rv>Instrument it, then drop it.</h2>
+      </div>
+
+      <figure class="fig" data-rv style="margin-bottom:clamp(36px,5vw,64px)">
+        <div class="diagram">
+          <svg viewBox="0 0 960 330" role="img" aria-label="Diagram of the test setup: a quadcopter frame with one load cell on each of its four arms and one at the centre hub; each load cell feeds an HX711 amplifier; all five amplifiers feed a Feather S2 running CircuitPython, which logs peak force per sensor per drop. The frame is dropped from five feet.">
+
+            <g class="d-ink" style="stroke-width:3">
+              <path d="M170 165 L78 82 M170 165 L262 82 M170 165 L78 248 M170 165 L262 248"/>
+              <circle cx="78" cy="82" r="24"/><circle cx="262" cy="82" r="24"/>
+              <circle cx="78" cy="248" r="24"/><circle cx="262" cy="248" r="24"/>
+              <rect x="142" y="140" width="56" height="50" rx="12" fill="var(--card)"/>
+            </g>
+            <g fill="var(--cobalt)" stroke="var(--ink)" stroke-width="2.4">
+              <circle cx="124" cy="124" r="9"/><circle cx="216" cy="124" r="9"/>
+              <circle cx="216" cy="206" r="9"/><circle cx="124" cy="206" r="9"/>
+              <circle cx="170" cy="165" r="11" fill="var(--signal)"/>
+            </g>
+            <text x="134" y="108">S1</text>
+            <text x="206" y="108" text-anchor="end">S2</text>
+            <text x="206" y="232" text-anchor="end">S3</text>
+            <text x="134" y="232">S4</text>
+            <text x="170" y="132" text-anchor="middle" class="t-strong">S5</text>
+            <text x="170" y="306" text-anchor="middle">FRAME &middot; ONE CELL PER ARM + HUB</text>
+
+            <path class="d-dash" d="M300 165 H372"/>
+            <path class="d-ink" d="M364 158 l10 7 -10 7"/>
+            <g class="d-ink">
+              <rect x="386" y="62" width="120" height="30" rx="6"/>
+              <rect x="386" y="106" width="120" height="30" rx="6"/>
+              <rect x="386" y="150" width="120" height="30" rx="6"/>
+              <rect x="386" y="194" width="120" height="30" rx="6"/>
+              <rect x="386" y="238" width="120" height="30" rx="6"/>
+            </g>
+            <text x="446" y="82" text-anchor="middle">HX711</text>
+            <text x="446" y="126" text-anchor="middle">HX711</text>
+            <text x="446" y="170" text-anchor="middle">HX711</text>
+            <text x="446" y="214" text-anchor="middle">HX711</text>
+            <text x="446" y="258" text-anchor="middle">HX711</text>
+            <text x="446" y="306" text-anchor="middle">ONE AMPLIFIER PER CELL</text>
+
+            <path class="d-thin" d="M506 77 H548 V165 M506 121 H548 M506 209 H548 M506 253 H548 V165 M506 165 H590"/>
+            <path class="d-ink" d="M582 158 l10 7 -10 7"/>
+            <rect class="d-ink" x="604" y="124" width="150" height="82" rx="10" style="fill:var(--card)"/>
+            <text x="679" y="160" text-anchor="middle" class="t-strong">FEATHER S2</text>
+            <text x="679" y="180" text-anchor="middle">CIRCUITPYTHON</text>
+            <text x="679" y="306" text-anchor="middle">ALL FIVE CHANNELS</text>
+
+            <path class="d-dash" d="M754 165 H800"/>
+            <path class="d-ink" d="M792 158 l10 7 -10 7"/>
+            <g class="d-ink"><path d="M818 110 H930 M818 142 H930 M818 174 H930 M818 206 H930"/></g>
+            <text x="874" y="132" text-anchor="middle">DROP 1</text>
+            <text x="874" y="164" text-anchor="middle">DROP 2</text>
+            <text x="874" y="196" text-anchor="middle">DROP &hellip;</text>
+            <text x="874" y="306" text-anchor="middle">PEAK FORCE LOG</text>
+
+            <path class="d-thin" d="M34 40 V290 M26 40 h16 M26 290 h16"/>
+            <text x="34" y="26" text-anchor="middle" class="t-strong">5 FT</text>
+          </svg>
+        </div>
+        <figcaption>Diagram &mdash; test setup as described in the method below</figcaption>
+      </figure>
+
+      <ul class="log" data-rv style="margin-bottom:clamp(36px,5vw,64px)">
+        <li>
+          <span class="t">01 · Frame</span>
+          <div class="c"><h4>Printed test articles</h4><p>Frames were FDM printed so identical articles could be produced cheaply and destroyed repeatedly — the whole study depends on being able to break things without it mattering.</p></div>
+        </li>
+        <li>
+          <span class="t">02 · Sensors</span>
+          <div class="c"><h4>Five load cells, fixed positions</h4><p>One sensor per arm plus one at the center hub, each on an HX711 amplifier, at pre-determined locations so readings stayed comparable across trials.</p></div>
+        </li>
+        <li>
+          <span class="t">03 · Capture</span>
+          <div class="c"><h4>Feather S2 running CircuitPython</h4><p>The microcontroller sampled all five channels through impact and logged peak force per sensor per drop.</p></div>
+        </li>
+        <li>
+          <span class="t">04 · Test</span>
+          <div class="c"><h4>Five-foot drops, repeated</h4><p>The instrumented frame was released from a fixed 5 ft height across repeated trials to keep impact energy consistent.</p></div>
+        </li>
+        <li>
+          <span class="t">05 · Analysis</span>
+          <div class="c"><h4>ANOVA and Kruskal–Wallis</h4><p>Both a parametric and a non-parametric test were run, since peak-force distributions across sensors weren’t safe to assume normal.</p></div>
+        </li>
+      </ul>
+
+      <div class="photo-row">
+        <figure class="fig photo-slot" data-photo="../images/arksef-rig.jpg" data-alt="Drop test rig wired to the data capture board">
+          <div class="fig-frame r4x3"></div>
+          <figcaption>Fig. 02 — Drop-test rig and capture electronics</figcaption>
+        </figure>
+        <figure class="fig photo-slot" data-photo="../images/arksef-poster.jpg" data-alt="ARKSEF research poster">
+          <div class="fig-frame r4x3"></div>
+          <figcaption>Fig. 03 — Competition poster</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec field f-volt" aria-label="Results" style="margin-top:clamp(36px,6vw,92px)">
+    <svg class="edge" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 90V40C200 86 380 86 600 44S980 4 1160 40s220 40 280 12v38Z"/></svg>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow" data-rv><span class="eb-n">03</span>Results</p>
+        <h2 class="loud" data-rv style="font-size:clamp(44px,8vw,120px);max-width:12ch">The hub takes it, not the arms.</h2>
+      </div>
+
+      <div class="two-col" style="align-items:start">
+        <div>
+          <div class="bar-chart" data-in role="img" aria-label="Bar chart of relative peak force by sensor position: arm 1 41 percent, arm 2 36 percent, arm 3 44 percent, arm 4 38 percent, centre hub 84 percent.">
+            <div class="bar"><span class="val">Arm 1</span><div class="fill" style="height:41%"></div><span class="lbl">S1</span></div>
+            <div class="bar"><span class="val">Arm 2</span><div class="fill" style="height:36%"></div><span class="lbl">S2</span></div>
+            <div class="bar"><span class="val">Arm 3</span><div class="fill" style="height:44%"></div><span class="lbl">S3</span></div>
+            <div class="bar"><span class="val">Arm 4</span><div class="fill" style="height:38%"></div><span class="lbl">S4</span></div>
+            <div class="bar peak"><span class="val">Center</span><div class="fill" style="height:84%"></div><span class="lbl">S5</span></div>
+          </div>
+          <p class="chart-cap">
+            Relative peak force by sensor position. Sensor 5 sits at the center hub; S1–S4 sit one per arm.
+          </p>
+        </div>
+
+        <div class="prose" data-rv>
+          <p class="lede">The center hub recorded <span class="hl" style="--hl:#f4f1ea">higher peak force</span> than any arm position, and the gap held across trials.</p>
+          <p>The Kruskal–Wallis test returned a p-value of 0.001, so the spread between sensor positions is a real effect rather than measurement noise. The hub sat well above all four arms, and no single arm separated itself from the others — consistent with the arms acting as a load path that carries impact energy inward to the point where they meet.</p>
+          <p>The practical read: extra material earns its weight at the hub and the arm-to-hub junctions. Reinforcing there buys structural integrity that spreading the same mass evenly across the frame does not.</p>
+        </div>
+      </div>
+    </div>
+    <svg class="edge flip" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 90V52C180 4 340 4 520 40S880 92 1080 44s260-36 360-8v54Z"/></svg>
+  </section>
+
+  <section aria-label="Conclusion" style="padding-block:calc(var(--sec) + clamp(36px, 6vw, 92px)) var(--sec)">
+    <div class="wrap" data-rv>
+      <p class="pull-quote">Peak force concentrated at the center, not the arms — so reinforcing the hub is a better use of material than adding mass across the whole frame.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="Limits and next steps" style="padding-top:0">
+    <div class="wrap two-col two-even">
+      <div>
+        <p class="eyebrow" data-rv style="margin-bottom:18px"><span class="eb-n">04</span>Limits</p>
+        <div class="prose" data-rv>
+          <p>Drops were vertical and from a single height, so the results describe flat-impact loading rather than the angled, spinning crashes a real pilot produces. Printed PLA also behaves differently from carbon-fiber plate, which most commercial frames use.</p>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow" data-rv style="margin-bottom:18px"><span class="eb-n">05</span>What’s next</p>
+        <div class="prose" data-rv>
+          <p>The obvious follow-up is angled drops and a hub-reinforced geometry tested against the baseline frame on the same rig — same sensors, same height, one variable changed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <nav class="project-nav" aria-label="More work">
+      <a class="pn-card" href="../index.html#work" data-warp>
+        <span class="mono-k">Back</span>
+        <b>All work</b>
+      </a>
+      <a class="pn-card next" href="ferros.html" data-warp>
+        <span class="mono-k">Next project</span>
+        <b>Project Ferros</b>
+      </a>
+    </nav>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-top">
+        <span>© 2026 Lawrence Lei-Ramirez</span>
+        <div class="foot-links">
+          <a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="../index.html#contact">Contact</a>
+        </div>
+      </div>
+      <div class="foot-console">
+        <button class="console-btn" id="gridBtn" aria-pressed="false">Grid</button>
+        <button class="console-btn" id="benchBtn" aria-pressed="false">Bench light</button>
+        <span class="clock-chip" id="clock">LIT 00:00:00</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<div class="grid-ol" aria-hidden="true"></div>
+<div id="bench-light" aria-hidden="true"></div>
+
+<script src="../script.js"></script>
+<script src="../characters.js"></script>
+<script src="../wormhole.js"></script>
+</body>
+</html>
