@@ -38,11 +38,9 @@
   }
 
   var START = 420;
-  var DRAW  = 2100;
-  var HOLD  = 420;
+  var HOLD  = 650;
   var WIPE  = 1150;
-  var PAUSE_SHARE = 0.2;
-  var FALLBACK_EASE = 'cubic-bezier(.42,0,.58,1)';
+  var FPS   = 60;
 
   function eraserPath(w, h) {
 
@@ -65,8 +63,8 @@
     return d;
   }
 
-  var vb = (frame.getAttribute('viewBox') || '0 0 1058 647').split(/[\s,]+/).map(Number);
-  var sigAspect = (vb[3] && vb[2]) ? vb[3] / vb[2] : 647 / 1058;
+  var vb = (frame.getAttribute('viewBox') || '0 0 893 551').split(/[\s,]+/).map(Number);
+  var sigAspect = (vb[3] && vb[2]) ? vb[3] / vb[2] : 551 / 893;
 
   function layout() {
     var w = window.innerWidth, h = window.innerHeight;
@@ -98,37 +96,19 @@
   window.addEventListener('resize', layout);
 
   var anims = [];
-  var shares = paths.map(function (p) {
-    return parseFloat(p.style.getPropertyValue('--l')) || 1 / paths.length;
-  });
-  var gaps = paths.map(function (p) {
-    return parseFloat(p.style.getPropertyValue('--gap')) || 0;
-  });
-  var shareSum = shares.reduce(function (a, b) { return a + b; }, 0) || 1;
-  var gapSum   = gaps.reduce(function (a, b) { return a + b; }, 0) || 1;
+  var end = START;
 
-  var writeMs = DRAW * (1 - PAUSE_SHARE);
-  var pauseMs = DRAW * PAUSE_SHARE;
-  var at = START;
-
-  paths.forEach(function (path, i) {
-
-    at += (gaps[i] / gapSum) * pauseMs;
-    var dur = Math.max((shares[i] / shareSum) * writeMs, 16);
-    var frames = [{ strokeDashoffset: 1.05 }, { strokeDashoffset: 0 }];
-
-    var pen = path.style.getPropertyValue('--ease').trim();
-    try {
-      anims.push(path.animate(frames,
-        { delay: at, duration: dur, easing: pen || FALLBACK_EASE, fill: 'both' }));
-    } catch (e) {
-      anims.push(path.animate(frames,
-        { delay: at, duration: dur, easing: FALLBACK_EASE, fill: 'both' }));
-    }
-    at += dur;
+  paths.forEach(function (path) {
+    var at = START + (parseFloat(path.getAttribute('data-at')) || 0);
+    var k = (path.getAttribute('data-k') || '0,1').split(',').map(Number);
+    var frames = k.map(function (p) { return { strokeDashoffset: 1 - p }; });
+    frames[0].strokeDashoffset = 1.05;
+    var dur = Math.max(((k.length - 1) / FPS) * 1000, 16);
+    anims.push(path.animate(frames, { delay: at, duration: dur, easing: 'linear', fill: 'both' }));
+    end = Math.max(end, at + dur);
   });
 
-  var wipeAt = at + HOLD;
+  var wipeAt = end + HOLD;
 
   anims.push(rub.animate(
     [{ strokeDashoffset: 1.05 }, { strokeDashoffset: 0 }],
